@@ -1,9 +1,6 @@
-package com.project.todotodo.domain;
+package com.project.todotodo.model;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-import jdk.jfr.Unsigned;
 import lombok.Getter;
 import lombok.Setter;
 

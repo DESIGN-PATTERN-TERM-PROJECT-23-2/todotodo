@@ -1,4 +1,4 @@
-package com.project.todotodo.domain;
+package com.project.todotodo.model;
 
 public class OneWeekDisplay implements Observer, DisplayElement {
     Observable observable;
