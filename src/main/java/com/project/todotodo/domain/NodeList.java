@@ -7,13 +7,22 @@ import jdk.jfr.Unsigned;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
+
 @Entity
-@Table(name = "node_lists")
 @Getter
 @Setter
 public class NodeList {
-    // NodeListIterator
-    
-    @Column(name = "node")
-    private Node node;
+
+    NodeListIterator nodeListIterator;
+
+    private Node parent;
+
+    private ArrayList<Node> children;
+
+    public NodeListIterator createIterator(){
+        return null;
+    }
+
+
 }
