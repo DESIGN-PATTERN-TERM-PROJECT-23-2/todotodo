@@ -9,11 +9,11 @@ public class SpringConfig {
 
     private final CategoryRepository categoryRepository;
     private final NodeArrayListRepository nodeArrayListRepository;
-    private final NodeDomainRepository nodeDomainRepository;
+    private final NodeRepository nodeDomainRepository;
     private final NodeListRepository nodeListRepository;
     private final TodoListRepository todoListRepository;
     @Autowired
-    public SpringConfig(CategoryRepository categoryRepository, NodeArrayListRepository nodeArrayListRepository, NodeDomainRepository nodeDomainRepository, NodeListRepository nodeListRepository, TodoListRepository todoListRepository){
+    public SpringConfig(CategoryRepository categoryRepository, NodeArrayListRepository nodeArrayListRepository, NodeRepository nodeDomainRepository, NodeListRepository nodeListRepository, TodoListRepository todoListRepository){
         this.categoryRepository = categoryRepository;
         this.nodeArrayListRepository = nodeArrayListRepository;
         this.nodeDomainRepository = nodeDomainRepository;
