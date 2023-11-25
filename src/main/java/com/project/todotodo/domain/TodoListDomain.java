@@ -21,6 +21,10 @@ public class TodoListDomain {
     @JoinColumn(name = "node_id")
     private NodeDomain parent;
 
+    @OneToOne
+    @JoinColumn(name = "node_id")
+    private NodeDomain node;
+
     @Column(name = "is_complete")
     private int isComplete;
 

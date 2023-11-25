@@ -24,4 +24,8 @@ public class NodeDomain {
 
     @Column(name = "level")
     private Unsigned level;
+
+    @Column(name = "is_category")
+    private boolean isCategory;
+
 }
