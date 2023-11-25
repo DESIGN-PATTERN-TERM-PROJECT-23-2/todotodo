@@ -17,5 +17,4 @@ public class CategoryDomain {
     @OneToOne
     @JoinColumn(name = "node_id")
     private NodeDomain node;
-
 }
