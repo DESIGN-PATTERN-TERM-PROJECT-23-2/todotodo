@@ -5,7 +5,7 @@ import jdk.jfr.Unsigned;
 import lombok.Getter;
 import lombok.Setter;
 
-@Entity
+
 @Getter
 @Setter
 public abstract class Node {

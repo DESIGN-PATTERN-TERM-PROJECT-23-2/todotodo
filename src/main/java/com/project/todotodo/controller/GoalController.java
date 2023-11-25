@@ -24,7 +24,7 @@ public class GoalController {
    //  @Operation(summary = "게시글 전체 목록")
     @GetMapping("/create")
     public String createForm(){
-        return "";
+        return "goal/create";
     }
 
     @PostMapping("/create")
