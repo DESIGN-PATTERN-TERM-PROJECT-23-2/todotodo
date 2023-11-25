@@ -24,12 +24,13 @@ public class GoalController {
     }
 
 
-//    @PostMapping("/create")
-//    public String create(GoalForm goalForm){
-//        Category category = new Category();
-//        // goal form으로 category 저장하는 코드
-//        return "redirect:/";
-//    }
+    @PostMapping("/create")
+    public String create(GoalForm goalForm){
+        Category category = new Category();
+        // goal form으로 category 저장하는 코드
+        System.out.println(goalForm.getName());
+        return "redirect:/";
+    }
 
 
 }
