@@ -15,7 +15,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CategoryService {
     private final CategoryRepository categoryRepository;
-    private final NodeRepository nodeRepository;
 
     public List<CategoryDomain> getAllCategories() {
         return categoryRepository.findAll();
