@@ -3,6 +3,7 @@ package com.project.todotodo.service;
 import com.project.todotodo.domain.CategoryDomain;
 import com.project.todotodo.domain.NodeDomain;
 import com.project.todotodo.dto.Goal.GoalForm;
+
 import com.project.todotodo.repository.CategoryRepository;
 import com.project.todotodo.repository.NodeRepository;
 import lombok.RequiredArgsConstructor;
@@ -37,5 +38,6 @@ public class CategoryService {
 
     public void deleteCategoryById(Long id) {
         categoryRepository.deleteById(id);
+
     }
 }
