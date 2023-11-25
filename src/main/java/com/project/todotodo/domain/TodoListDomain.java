@@ -18,7 +18,7 @@ public class TodoListDomain {
     private Long todoListId;
 
     @OneToOne
-    @JoinColumn(name = "node_id")
+    @JoinColumn(name = "parent_id")
     private NodeDomain parent;
 
     @OneToOne

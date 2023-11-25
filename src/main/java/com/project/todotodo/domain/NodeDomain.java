@@ -1,7 +1,6 @@
 package com.project.todotodo.domain;
 
 import jakarta.persistence.*;
-import jdk.jfr.Unsigned;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -23,7 +22,7 @@ public class NodeDomain {
     private String content;
 
     @Column(name = "level")
-    private Unsigned level;
+    private int level;
 
     @Column(name = "is_category")
     private boolean isCategory;
