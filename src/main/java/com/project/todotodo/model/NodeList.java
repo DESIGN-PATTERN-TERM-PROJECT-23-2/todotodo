@@ -14,6 +14,7 @@ public class NodeList {
     NodeListIterator nodeListIterator;
 
     private Node parent;
+    private Node curr;
 
     private ArrayList<Node> children;
 

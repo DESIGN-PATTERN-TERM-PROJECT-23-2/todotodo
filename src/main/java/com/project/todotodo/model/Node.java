@@ -9,9 +9,11 @@ import lombok.Setter;
 @Getter
 @Setter
 public abstract class Node {
+    private Long nodeId;
+
     NodeList nodeList;
 
     private String content;
 
-    private Unsigned level;
+    private int level;
 }
