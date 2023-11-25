@@ -7,11 +7,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Controller
 @RestController
-@RequestMapping( value = "/todolistcs",  produces = "application/json;charset=utf8")
-public class TodoListController {
-    private final TodoListService todoListService;
+@RequestMapping( value = "/goal",  produces = "application/json;charset=utf8")
+public class GoalController {
+    //private final TodoListService todoListService;
 
-    public TodoListController(TodoListService todoListService) {
-        this.todoListService = todoListService;
-    }
+//    public TodoListController(TodoListService todoListService) {
+//        this.todoListService = todoListService;
+//    }
 }
