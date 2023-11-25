@@ -21,23 +21,17 @@ public class CategoryService {
         return categoryRepository.findAll();
     }
 
-    public GoalForm createCategory(String name) {
+    public void createCategory(String name) {
         CategoryDomain newCategory = new CategoryDomain();
         NodeDomain node = new NodeDomain();
 
         node.setContent(name);
         newCategory.setNode(node);
 
-        CategoryDomain savedCategory = categoryRepository.save(newCategory);
-
-        GoalForm goalForm = new GoalForm();
-        goalForm.setName(savedCategory.getNode().getContent());
-
-        return goalForm;
+        categoryRepository.save(newCategory);
     }
 
     public void deleteCategoryById(Long id) {
         categoryRepository.deleteById(id);
-
     }
 }
