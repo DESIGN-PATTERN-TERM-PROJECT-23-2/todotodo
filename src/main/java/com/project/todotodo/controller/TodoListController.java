@@ -6,8 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @Controller
-@RestController
-@RequestMapping( value = "/todolistcs",  produces = "application/json;charset=utf8")
+@RequestMapping( value = "/todolist",  produces = "application/json;charset=utf8")
 public class TodoListController {
     private final TodoListService todoListService;
 

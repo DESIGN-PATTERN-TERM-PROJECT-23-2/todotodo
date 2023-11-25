@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @Controller
-@RestController
 @RequestMapping( value = "/calender",  produces = "application/json;charset=utf8")
 public class CalenderController {
     //private final TodoListService todoListService;
