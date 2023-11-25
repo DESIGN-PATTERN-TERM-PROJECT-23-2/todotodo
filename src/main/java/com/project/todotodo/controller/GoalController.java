@@ -36,7 +36,7 @@ public class GoalController {
 
     @GetMapping("/list")
     public String list(Model model){
-        List<CategoryDomain> categories = categoryService.getAllCategories();
+        List<CategoryListElement> categories = categoryService.getAllCategories();
         model.addAttribute("categories", categories);
         return "goal/list";
     }
