@@ -35,7 +35,7 @@ public class GoalController {
 
     @GetMapping("/list")
     public String list(Model model){
-        //List<CategoryDomain> categories = categoryService.getAllCategories();
+        //List<CategoryListElement> categories = categoryService.getAllCategories();
         //model.addAttribute("categories", categories);
         return "goal/list";
     }
@@ -45,8 +45,6 @@ public class GoalController {
         // categoryService.deleteCategoryById(id);
         return "redirect:/goal/list"; // 삭제 후 카테고리 목록으로 리다이렉트
     }
-
-
 
 
 }
