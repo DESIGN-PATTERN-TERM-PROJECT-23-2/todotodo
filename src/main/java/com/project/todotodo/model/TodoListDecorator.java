@@ -1,4 +1,4 @@
-package com.project.todotodo.domain;
+package com.project.todotodo.model;
 
 import jakarta.persistence.Entity;
 import lombok.Getter;
