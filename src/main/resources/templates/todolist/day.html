@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Todolist for Day</title>
+    <style>
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        .top-section {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+        }
+        .bottom-section {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+        }
+        .left {
+            width: 50%;
+            text-align: left;
+        }
+        .right {
+            width: 50%;
+            text-align: right;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="top-section">
+        <div>
+            <a href="/goal/create">+ Add Goal</a>
+            <a href="/goal/list">Settings</a>
+        </div>
+        <h1>Todolist for <span th:text="${date}"></span></h1>
+    </div>
+    <div class="bottom-section">
+        <div class="left">
+            <ul th:each="category : ${categoryList}">
+                <li th:text="${category.content}">
+                    <ul>
+                        <li th:each="element : ${category.todoListElementList}">
+                            <span th:text="${element.content}"></span>
+                            <span th:text="${element.nodeId}"></span>
+                            <span th:text="${element.todoListId}"></span>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div class="right">
+            <img src="/images/Sample.png" alt="Image">
+        </div>
+    </div>
+</div>
+</body>
+</html>

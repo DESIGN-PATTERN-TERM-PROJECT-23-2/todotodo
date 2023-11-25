@@ -1,4 +1,4 @@
-package com.project.todotodo;
+package com.project.todotodo.config;
 
 import com.project.todotodo.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
