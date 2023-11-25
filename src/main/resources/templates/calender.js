@@ -46,17 +46,21 @@ function calender(month, year) {
 
     // Output the calender onto the site.  Also, putting in the month name and days of the week.
     var calenderTable = "<table>";
-    if ($(window).width() < 750) {
+    calenderTable += "<tr class='table-header'> <th>Sun</th> <th>Mon</th> <th>Tues</th> <th>Wed</th> <th>Thur</th> <th>Fri</th> <th>Sat</th> </tr>";
+
+    /*if ($(window).width() < 750) {
         calenderTable += "<tr class='table-header'> <th>Sun</th> <th>Mon</th> <th>Tues</th> <th>Wed</th> <th>Thur</th> <th>Fri</th> <th>Sat</th> </tr>";
     } else {
         calenderTable += "<tr class='table-header'> <th>Sunday</th> <th>Monday</th> <th>Tuesday</th> <th>Wednesday</th> <th>Thursday</th> <th>Friday</th> <th>Saturday</th> </tr>";
-    }
+    }*/
     calenderTable += "<tr>";
     calenderTable += padding;
     calenderTable += generateCal;
     calenderTable += "</tr></table>";
 
-    $(".container").html(calenderTable);
+    //$(".container").html(calenderTable);
+    var calhtml = document.getElementById("calendarHTML");
+    calhtml.html(calenderTable);
     $(".month").text(monthNames[month]);
     $(".month").attr('id', month);
     $(".year").text(year);
@@ -100,8 +104,9 @@ function prevMonth() {
 //
 // Load calender and weather
 //
+/*
 if (window.addEventListener) {
-    calender(currentMonth, currentYear);
+    calender(month, year);
     calculateWeather();
     refreshAllEvents();
 } else if (window.attachEvent) {
@@ -109,6 +114,7 @@ if (window.addEventListener) {
     calculateWeather();
     refreshAllEvents();
 }
+*/
 
 //
 // Whenever window is resized, page is reloaded so as to change full day names to short names to ensure responsiveness.
