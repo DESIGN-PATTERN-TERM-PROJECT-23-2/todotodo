@@ -14,7 +14,7 @@ public class CategoryDomain {
     @Column(name = "category_id")
     private Long categoryId;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "node_id")
     private NodeDomain node;
 }
