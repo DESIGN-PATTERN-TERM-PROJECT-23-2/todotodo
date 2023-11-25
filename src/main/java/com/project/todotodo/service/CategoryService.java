@@ -14,7 +14,7 @@ import java.util.List;
 public class CategoryService {
     private final CategoryRepository categoryRepository;
 
-    public List<CategoryDomain> getCategorys() {
+    public List<CategoryDomain> getCategorys(String name) {
         List<CategoryDomain> categorys = categoryRepository.findAll();
         return categorys;
     }
