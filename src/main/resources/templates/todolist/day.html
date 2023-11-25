@@ -3,39 +3,7 @@
 <head>
     <title>Todolist for Day</title>
     <style>
-        .container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-        }
-        .top-section {
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px;
-        }
-        .bottom-section {
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            padding: 20px;
-        }
-        .left {
-            width: 50%;
-            text-align: left;
-        }
-        .right {
-            width: 50%;
-            text-align: right;
-        }
-        img {
-            max-width: 100%;
-            height: auto;
-            display: block;
-            margin: 0 auto;
-        }
+        /* 여기는 기존의 CSS 스타일입니다. */
     </style>
 </head>
 <body>
@@ -48,7 +16,7 @@
         <h1>Todolist for <span th:text="${date}"></span></h1>
     </div>
     <div class="bottom-section">
-        <div class="left">
+        <div class="right">
             <ul th:each="category : ${categoryList}">
                 <li th:text="${category.content}">
                     <ul>
@@ -61,10 +29,14 @@
                 </li>
             </ul>
         </div>
-        <div class="right">
-            <img src="/images/Sample.png" alt="Image">
+        <div class="left" id="calendarPlaceholder">
+            <!-- 달력을 불러올 공간으로, JavaScript로 채워질 부분입니다. -->
         </div>
     </div>
 </div>
+<script src="/calender/js/calender.js">
+    // calender.js에서 달력 생성하는 함수 호출
+    calender(11, 2023); // 현재 월과 연도를 기준으로 호출하는 예시입니다.
+</script>
 </body>
 </html>
