@@ -12,6 +12,10 @@ public class NodeListIterator implements Iterator {
         this.curr = curr;
     }
 
+    public Node getCurr(){
+        return curr;
+    }
+
     public void initCurr(){
         this.curr = root.getCurr();
     }
