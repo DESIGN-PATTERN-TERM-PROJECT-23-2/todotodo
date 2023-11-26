@@ -39,25 +39,41 @@ public class NodeListRepositoryClass {
     }
 
     public ArrayList<Node> findByParentId(Long id, Node parent) {
-        List<Node> nodeList = jdbcTemplate.query(
-                "SELECT * FROM todo_lists WHERE parent_id = ?",
-                new Object[]{id},
+        List<Long> nodeIdList = getNodeIdsByParentId(id);
+        ArrayList nodes = new ArrayList<Node>();
+        for (Long element : nodeIdList){
+            ToDoList todo = getTodoListById(element, parent);
+            nodes.add(todo);
+        }
+        return nodes;
+    }
+
+    public List<Long> getNodeIdsByParentId(Long parentId) {
+        String sql = "SELECT node_id FROM todo_lists WHERE parent_id = ?";
+        return jdbcTemplate.queryForList(sql, Long.class, parentId);
+    }
+
+    public ToDoList getTodoListById(Long nodeId, Node parent) {
+        ToDoList toDoList = jdbcTemplate.queryForObject(
+                "SELECT n.*, tl.* FROM nodes n JOIN todo_lists tl ON n.node_id = tl.node_id WHERE n.node_id = ?",
                 (resultSet, rowNum) -> {
                     ToDoList todo = new ToDoList();
                     todo.setNodeList(parent);
-                    todo.setLevel(resultSet.getInt("level"));
-                    todo.setContent(resultSet.getString("content"));
-                    todo.setNodeId(resultSet.getLong("node_id"));
+                    todo.setLevel(resultSet.getInt("n.level"));
+                    todo.setContent(resultSet.getString("n.content"));
+                    todo.setNodeId(resultSet.getLong("n.node_id"));
                     todo.setParent(parent);
-                    todo.setComplete(resultSet.getInt("is_complete") == 1);
-                    Timestamp timestamp = resultSet.getTimestamp("date");
+                    todo.setComplete(resultSet.getInt("tl.is_complete") == 1);
+                    Timestamp timestamp = resultSet.getTimestamp("tl.date");
                     if (timestamp != null) {
                         todo.setDate(timestamp.toLocalDateTime());
                     }
                     return todo;
-                });
+                },
+                nodeId);
 
-        return new ArrayList<>(nodeList);
+        return toDoList;
     }
+
 
 }
