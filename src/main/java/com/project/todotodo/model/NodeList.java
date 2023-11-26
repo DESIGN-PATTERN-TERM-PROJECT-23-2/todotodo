@@ -19,7 +19,8 @@ public class NodeList {
     private ArrayList<Node> children;
 
     public NodeListIterator createIterator(){
-        return null;
+        this.nodeListIterator = new NodeListIterator(this);
+        return this.nodeListIterator;
     }
 
 
