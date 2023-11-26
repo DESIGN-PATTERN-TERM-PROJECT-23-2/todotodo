@@ -26,13 +26,20 @@ public class NodeListService {
 
     private NodeList initNodeList(){
         NodeList nodeList = new NodeList();
+        this.nodeList = new NodeList();
         this.nodeListIterator = this.nodeList.createIterator();
         for (Node element : nodeListRepositoryClass.findCategories()) {
             nodeListIterator.add(element);
         }
+
         while(nodeListIterator.hasNext()){
             // ArrayList<Node>
+            Node parent = nodeListIterator.next();
+            nodeListIterator.setCurr(parent);
+            ArrayList<Node> children = nodeListRepositoryClass.findByParentId(parent.getNodeId(), parent);
+
         }
+        nodeListIterator.initCurr();
         // 이제 iterator로 순회하기...
         return nodeList;
     }

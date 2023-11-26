@@ -8,6 +8,14 @@ public class NodeListIterator implements Iterator {
     NodeList root;
     Node curr;
 
+    public void setCurr(Node curr) {
+        this.curr = curr;
+    }
+
+    public void initCurr(){
+        this.curr = root.getCurr();
+    }
+
     public NodeListIterator(NodeList root){
         this.root = root;
         this.curr = root.getCurr();
@@ -16,6 +24,9 @@ public class NodeListIterator implements Iterator {
     @Override
     public boolean hasNext() {
         ArrayList<Node> allList = getAllChildrenWithDFS(root.getCurr());
+        if(!allList.contains(curr)){
+            return false;
+        }
         int currInx = allList.indexOf(curr);
         int lastInx = allList.size() - 1;
         if(currInx < lastInx){
@@ -38,6 +49,9 @@ public class NodeListIterator implements Iterator {
 
     public boolean hasPrevious(){
         ArrayList<Node> allList = getAllChildrenWithDFS(root.getCurr());
+        if(!allList.contains(curr)){
+            return false;
+        }
         int currInx = allList.indexOf(curr);
         if(currInx > 0){
             return true;
@@ -50,8 +64,8 @@ public class NodeListIterator implements Iterator {
         if(hasNext()){
             ArrayList<Node> allList = getAllChildrenWithDFS(root.getCurr());
             int nextInx = allList.indexOf(curr) + 1;
-            curr = allList.get(nextInx);
-            if(curr.getLevel() == 0){
+            Node nextNode = allList.get(nextInx);
+            if(nextNode.getLevel() == 0){
                 return true;
             }
         }
