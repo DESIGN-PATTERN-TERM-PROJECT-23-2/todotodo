@@ -52,8 +52,12 @@ public class CategoryRepositoryClass {
     }
 
     public void removeCateogory(Long id){
+
         String sql = "DELETE FROM categories WHERE node_id = ?";
         jdbcTemplate.update(sql, id);
+
+        String sql2 = "DELETE FROM nodes WHERE node_id = ?";
+        jdbcTemplate.update(sql2, id);
     }
 
 

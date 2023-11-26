@@ -55,13 +55,7 @@ public class CategoryService {
     }
 
     public void deleteCategoryById(Long id) {
-        ArrayList<Node> children = nodeListIterator.getAllChildrenWithBFS(nodeListIterator.findNodeInRoot(id));
-        ListIterator<Node> iterator = children.listIterator(children.size());
-
-        while (iterator.hasPrevious()) {
-            Node currentNode = iterator.previous();
-            todoListService.deleteTodoListById(currentNode.getNodeId());
-        }
+        todoListService.deleteChildrenTodoListById(id);
         nodeListIterator.remove(id);
         categoryRepositoryClass.removeCateogory(id);
         return;
