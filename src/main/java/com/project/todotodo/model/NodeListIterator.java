@@ -23,6 +23,16 @@ public class NodeListIterator implements Iterator {
         return false;
     }
 
+    @Override
+    public ArrayList<Node> next() {
+        return null;
+    }
+
+    public Node previous(){
+        return null;
+    }
+
+
     public boolean hasChildren(){
         if(curr != null){
             if((curr.getNodeList().getChildren() != null)
@@ -44,41 +54,36 @@ public class NodeListIterator implements Iterator {
 
     public boolean hasSibling(){
         if(hasParent()){
-
+            ArrayList<Node> siblings = getParent().getNodeList().getChildren();
+            if(siblings != null && siblings.size() > 0){
+                return true;
+            }
         }
         return false;
     }
 
-    @Override
-    public ArrayList<Node> next() {
-        return null;
-    }
-
-    public Node previous(){
-        return null;
-    }
-
     public ArrayList<Node> getChildren() {
-        return curr.getNodeList().getChildren();
+        if(hasChildren()){
+            return curr.getNodeList().getChildren();
+        }
+        return null;
     }
 
     public Node getParent(){
-        return curr.getNodeList().getParent();
+        if(hasParent()){
+            return curr.getNodeList().getParent();
+        }
+        return null;
     }
 
-    public int findLevel(Node node){
-        return node.getLevel();
+    public ArrayList<Node> getSibling(){
+        if(hasSibling()){
+            return getParent().getNodeList().getChildren();
+        }
+        return null;
     }
 
-    public int findPosInLevel(Node node){
-        return 0;
-    }
-
-    public boolean changePos(Node node, int newLevel, int newPos){
-        return false;
-    }
-
-
+    // curr의 chilrren에 추가
     public boolean add(Node node){
         try {
             ArrayList<Node> children = curr.getNodeList().getChildren();
@@ -93,7 +98,7 @@ public class NodeListIterator implements Iterator {
     // node 검색 -> 그 node 삭제
     public boolean remove(Node node){
         try {
-            ArrayList<Node> children = curr.getNodeList().getChildren();
+            ArrayList<Node> children = getChildren();
             children.remove(node);
             curr.getNodeList().setChildren(children);
             return true;
@@ -151,20 +156,20 @@ public class NodeListIterator implements Iterator {
         return -1;
     }
 
-   public Node findNodeInRoot(Long targetId){
-       ArrayList<Node> needVisit = new ArrayList<Node>();
-       needVisit.add(root.getCurr());
-       Node curr;
-       while(needVisit.size() > 0){
-           curr = needVisit.get(needVisit.size()-1);
-           needVisit.remove(needVisit.size()-1);
-           if(curr.getNodeId() == targetId){
-               return curr;
-           }
-           if(this.hasNext()){
-               needVisit.addAll(this.next());
-           }
-       }
+    public Node findNodeInRoot(Long targetId){
+        ArrayList<Node> needVisit = new ArrayList<Node>();
+        needVisit.add(root.getCurr());
+        Node curr;
+        while(needVisit.size() > 0){
+            curr = needVisit.get(needVisit.size()-1);
+            needVisit.remove(needVisit.size()-1);
+            if(curr.getNodeId() == targetId){
+                return curr;
+            }
+            if(this.hasNext()){
+                needVisit.addAll(this.next());
+            }
+        }
         return null;
     }
 
@@ -178,5 +183,16 @@ public class NodeListIterator implements Iterator {
         }
     }
 
+    /*public int findLevel(Node node){
+        return node.getLevel();
+    }
 
+    public int findPosInLevel(Node node){
+        return 0;
+    }
+
+    public boolean changePos(Node node, int newLevel, int newPos){
+        return false;
+    }
+*/
 }

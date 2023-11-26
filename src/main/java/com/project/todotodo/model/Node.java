@@ -10,8 +10,7 @@ import lombok.Setter;
 @Setter
 public abstract class Node {
     private Long nodeId;
-    NodeList nodeList;
-
+    private NodeList nodeList;
     private String content;
 
     private int level;
