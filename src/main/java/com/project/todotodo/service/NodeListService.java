@@ -8,6 +8,8 @@ import com.project.todotodo.repository.NodeListRepositoryClass;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+
 @Service
 public class NodeListService {
     private final NodeListRepository nodeListRepository;
@@ -25,7 +27,12 @@ public class NodeListService {
     private NodeList initNodeList(){
         NodeList nodeList = new NodeList();
         this.nodeListIterator = this.nodeList.createIterator();
-        nodeList.setChildren(nodeListRepositoryClass.findCategories());
+        for (Node element : nodeListRepositoryClass.findCategories()) {
+            nodeListIterator.add(element);
+        }
+        while(nodeListIterator.hasNext()){
+            // ArrayList<Node>
+        }
         // 이제 iterator로 순회하기...
         return nodeList;
     }
