@@ -8,6 +8,11 @@ public class NodeListIterator implements Iterator {
     NodeList root;
     Node curr;
 
+    public NodeListIterator(NodeList root, Node curr){
+        this.root = root;
+        this.curr = curr;
+    }
+
     public void setCurr(Node curr) {
         this.curr = curr;
     }
