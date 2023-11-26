@@ -38,4 +38,19 @@ public class TodoListRepositoryClass {
         String sql5 = "DELETE FROM node_array_list WHERE node_id = ?";
         jdbcTemplate.update(sql5, toDoList.getNodeId());
     }
+
+    public Long create(Node parent, ToDoList toDoList){
+
+        // 0. nodelist 만들기
+        // 1. Node를 만들기 (nodelistid
+        // 2. Node 만들 때 쓴 node id로 todolist 저장하기
+        // 3.
+        // 4.
+
+        // parent child 달아주기 (array list)
+
+
+        return 0L;
+    }
+
 }
