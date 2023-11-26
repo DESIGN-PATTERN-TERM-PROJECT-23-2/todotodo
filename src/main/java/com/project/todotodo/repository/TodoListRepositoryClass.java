@@ -39,7 +39,13 @@ public class TodoListRepositoryClass {
         jdbcTemplate.update(sql5, toDoList.getNodeId());
     }
 
-    public Long create(Long parent_id, ToDoList toDoList){
+    public Long create(Node parent, ToDoList toDoList){
+        // 1.
+        // 2.
+        // 3.
+        // 4.
+
+
         return 0L;
     }
 

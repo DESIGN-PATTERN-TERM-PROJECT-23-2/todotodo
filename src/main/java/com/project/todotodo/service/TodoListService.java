@@ -55,14 +55,14 @@ public class TodoListService {
 
     public Long createTodoList(Long parent_id, String content, LocalDateTime time){
         ToDoList todo = new ToDoList();
-        Node parent_node = nodeListIterator.findNodeInRoot(parent_id);
-        todo.setParent(parent_node);
+        Node parent = nodeListIterator.findNodeInRoot(parent_id);
+        todo.setParent(parent);
         todo.setComplete(false);
         todo.setDate(time);
-        todo.setLevel(parent_node.getLevel()+1);
+        todo.setLevel(parent.getLevel()+1);
         todo.setNodeList(new NodeList());
 
-        Long node_id = todoListRepositoryClass.create(parent_id, todo);
+        Long node_id = todoListRepositoryClass.create(parent, todo);
         todo.setNodeId(node_id);
 
         nodeListIterator.addToGivenParent(parent_id, todo);
