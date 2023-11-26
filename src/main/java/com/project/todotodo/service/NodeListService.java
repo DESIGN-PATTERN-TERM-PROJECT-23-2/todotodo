@@ -37,6 +37,7 @@ public class NodeListService {
             Node parent = nodeListIterator.next();
             nodeListIterator.setCurr(parent);
             ArrayList<Node> children = nodeListRepositoryClass.findByParentId(parent.getNodeId(), parent);
+
         }
         nodeListIterator.initCurr();
         // 이제 iterator로 순회하기...
