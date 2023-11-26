@@ -39,7 +39,11 @@
         }
 =======
         /* 여기는 기존의 CSS 스타일입니다. */
+<<<<<<< HEAD
 >>>>>>> NodeListInit
+=======
+>>>>>>> Service
+>>>>>>> fService
     </style>
 </head>
 <body>
@@ -61,7 +65,11 @@
             <ul th:each="category : ${categoryList}">
                 <li>
                     <span th:text="${category.content}"></span>
+<<<<<<< HEAD
 >>>>>>> NodeListInit
+=======
+>>>>>>> Service
+>>>>>>> fService
                     <ul>
                         <li th:each="element : ${category.todoListElementList}">
                             <span th:text="${element.content}"></span>
@@ -70,7 +78,11 @@
 <<<<<<< HEAD
 =======
                             <button class="addButton" th:data-nodeId="${element.nodeId}" th:data-categoryId="${category.categoryId}">Add</button>
+<<<<<<< HEAD
 >>>>>>> NodeListInit
+=======
+>>>>>>> Service
+>>>>>>> fService
                         </li>
                     </ul>
                 </li>
@@ -111,6 +123,10 @@
         });
     });
 </script>
+<<<<<<< HEAD
 >>>>>>> NodeListInit
+=======
+>>>>>>> Service
+>>>>>>> fService
 </body>
 </html>
