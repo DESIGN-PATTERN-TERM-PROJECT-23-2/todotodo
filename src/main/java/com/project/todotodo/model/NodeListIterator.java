@@ -16,7 +16,8 @@ public class NodeListIterator implements Iterator {
     @Override
     public boolean hasNext() {
         if(curr != null){
-            if(curr.getNodeList().getChildren().size() > 0){
+            if((curr.getNodeList().getChildren() != null)
+                    && (curr.getNodeList().getChildren().size() > 0)){
                 return true;
             }
         }
@@ -94,35 +95,61 @@ public class NodeListIterator implements Iterator {
 
     // dfs
     public ArrayList<Node> getAllChildrenWithDFS(Node target){
-        ArrayList<Node> allChildren = new ArrayList<Node>();
-        ArrayList<Node> needVisit = new ArrayList<Node>();
+        ArrayList<Node> allChildren = new ArrayList<>();
+        ArrayList<Node> needVisit = new ArrayList<>();
         needVisit.add(target);
         while(needVisit.size() > 0){
-            allChildren.add(curr);
             curr = needVisit.get(needVisit.size()-1);
             needVisit.remove(needVisit.size()-1);
+            allChildren.add(curr);
             if(this.hasNext()){
-                needVisit.addAll(this.next());
+                ArrayList<Node> children = curr.getNodeList().getChildren();
+                for (int i = children.size() - 1; i >= 0; i--) {
+                    needVisit.add(children.get(i));
+                }
             }
         }
         return allChildren;
     }
 
+    // if returns -1:  error
+    public int getIndexAmongChildren(Node target){
+        NodeList targetNodeList = target.getNodeList();
+        if(targetNodeList.getNodeListIterator().hasPrevious()){
+            NodeList parentNodeList = targetNodeList.getParent().getNodeList();
+            ArrayList<Node> siblings = parentNodeList.getChildren();
+            int index = siblings.indexOf(target);
+            return index;
+        }
+        System.out.println("getIndexAmongChildren():: Error occurred");
+        return -1;
+    }
 
-   /* public NodeList findNodeInRoot(Node target){
-
+   public Node findNodeInRoot(Node target){
+       ArrayList<Node> needVisit = new ArrayList<Node>();
+       needVisit.add(target);
+       while(needVisit.size() > 0){
+           curr = needVisit.get(needVisit.size()-1);
+           needVisit.remove(needVisit.size()-1);
+           if(curr.getNodeId() == target.getNodeId()){
+               return curr;
+           }
+           if(this.hasNext()){
+               needVisit.addAll(this.next());
+           }
+       }
         return null;
     }
 
     public boolean addToGivenParent(Node parent, Node newNode){
         try {
-            NodeList currNodeList = findNodeInRoot(parent);
-            currNodeList.getNodeListIterator().add(newNode);
+            Node currNode = findNodeInRoot(parent);
+            currNode.getNodeList().getNodeListIterator().add(newNode);
             return true;
         } catch(Exception e){
             return false;
         }
-    }*/
+    }
 
 
 }
