@@ -12,20 +12,24 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 
 @Service
 public class CategoryService {
 
     private final CategoryRepository categoryRepository;
     private final NodeListService nodeListService;
+
+    private final TodoListService todoListService;
     private NodeListIterator nodeListIterator;
 
     private final CategoryRepositoryClass categoryRepositoryClass;
 
-    public CategoryService(CategoryRepository categoryRepository, NodeListService nodeListService, CategoryRepositoryClass categoryRepositoryClass) {
+    public CategoryService(CategoryRepository categoryRepository, NodeListService nodeListService, TodoListService todoListService, CategoryRepositoryClass categoryRepositoryClass) {
         this.categoryRepository = categoryRepository;
         this.nodeListService = nodeListService;
         this.nodeListIterator = nodeListService.getIterator();
+        this.todoListService = todoListService;
         this.categoryRepositoryClass = categoryRepositoryClass;
     }
 
@@ -51,8 +55,15 @@ public class CategoryService {
     }
 
     public void deleteCategoryById(Long id) {
+        ArrayList<Node> children = nodeListIterator.getAllChildrenWithBFS(nodeListIterator.findNodeInRoot(id));
+        ListIterator<Node> iterator = children.listIterator(children.size());
+
+        while (iterator.hasPrevious()) {
+            Node currentNode = iterator.previous();
+            todoListService.deleteTodoListById(currentNode.getNodeId());
+        }
         nodeListIterator.remove(id);
-        // categoryRepositoryClass.remove(id);
+        categoryRepositoryClass.removeCateogory(id);
         return;
     }
 }

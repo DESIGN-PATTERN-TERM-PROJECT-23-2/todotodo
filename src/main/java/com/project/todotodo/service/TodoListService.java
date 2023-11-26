@@ -13,4 +13,5 @@ public class TodoListService {
     }
 
     // create할 때 잊지 말고 parent id로 가서 list 레포 행동하기
+    public void deleteTodoListById(Long id) {}
 }

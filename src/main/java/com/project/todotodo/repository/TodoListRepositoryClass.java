@@ -14,11 +14,11 @@ public class TodoListRepositoryClass {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public void removeCateogories(ToDoList toDoList){
+    public void removeTodolist(ToDoList toDoList){
 
         // 1. todolist 지우기
         // 2. nodeId로 node 지우기
-        // 3. node의 nodelistId로 node 지우기
+        // 3. node의 nodelistId로 nodelist 지우기
         // 4. nodeId로 nodearraylist 지우기
 
         String sql = "DELETE FROM categories WHERE node_id = ?";
