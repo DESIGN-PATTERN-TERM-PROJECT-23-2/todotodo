@@ -3,6 +3,7 @@
 <head>
     <title>Todolist for Day</title>
     <style>
+<<<<<<< HEAD
         .container {
             display: flex;
             flex-direction: column;
@@ -36,6 +37,9 @@
             display: block;
             margin: 0 auto;
         }
+=======
+        /* 여기는 기존의 CSS 스타일입니다. */
+>>>>>>> Service
     </style>
 </head>
 <body>
@@ -48,23 +52,65 @@
         <h1>Todolist for <span th:text="${date}"></span></h1>
     </div>
     <div class="bottom-section">
+<<<<<<< HEAD
         <div class="left">
             <ul th:each="category : ${categoryList}">
                 <li th:text="${category.content}">
+=======
+        <div class="right">
+            <ul th:each="category : ${categoryList}">
+                <li>
+                    <span th:text="${category.content}"></span>
+>>>>>>> Service
                     <ul>
                         <li th:each="element : ${category.todoListElementList}">
                             <span th:text="${element.content}"></span>
                             <span th:text="${element.nodeId}"></span>
                             <span th:text="${element.todoListId}"></span>
+<<<<<<< HEAD
+=======
+                            <button class="addButton" th:data-nodeId="${element.nodeId}" th:data-categoryId="${category.categoryId}">Add</button>
+>>>>>>> Service
                         </li>
                     </ul>
                 </li>
             </ul>
         </div>
+<<<<<<< HEAD
         <div class="right">
             <img src="/images/Sample.png" alt="Image">
         </div>
     </div>
 </div>
+=======
+        <div class="left" id="calendarPlaceholder">
+            <!-- 달력을 불러올 공간으로, JavaScript로 채워질 부분입니다. -->
+        </div>
+    </div>
+</div>
+<script>
+    // 버튼 클릭 시 서버로 데이터 전송
+    document.querySelectorAll('.addButton').forEach(button => {
+        button.addEventListener('click', function() {
+            const nodeId = this.getAttribute('data-nodeId');
+            const categoryId = this.getAttribute('data-categoryId');
+            // Ajax를 사용하여 서버로 데이터 전송
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', '/your-endpoint-url'); // 여기에 실제 엔드포인트 URL을 넣어주세요
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    console.log('Data sent successfully');
+                    // 여기서 추가 작업을 수행할 수 있습니다.
+                } else {
+                    console.error('Data sending failed');
+                }
+            };
+            const data = JSON.stringify({ nodeId, categoryId });
+            xhr.send(data);
+        });
+    });
+</script>
+>>>>>>> Service
 </body>
 </html>
