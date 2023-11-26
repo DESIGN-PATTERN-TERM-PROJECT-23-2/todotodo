@@ -18,7 +18,7 @@ public class NodeListDomain {
     private Long nodeListId;
 
     @OneToOne
-    @JoinColumn(name = "node_id")
+    @JoinColumn(name = "parent_id")
     private NodeDomain parent;
 
 

@@ -25,7 +25,7 @@ public class TodoListRepositoryClass {
         String sql1 = "DELETE FROM todo_lists WHERE node_id = ?";
         jdbcTemplate.update(sql1, toDoList.getNodeId());
 
-        String sql2 = "SELECT node_list_id FROM nodes WHERE node_id = ?";
+        String sql2 = "SELECT node_list_id FROM nodes WHERE parent_id = ?";
         Long nodeListId = jdbcTemplate.queryForObject(sql2, Long.class, toDoList.getNodeId());
         String sql3 = "DELETE FROM nodes WHERE node_id = ?";
         jdbcTemplate.update(sql3, toDoList.getNodeId());
