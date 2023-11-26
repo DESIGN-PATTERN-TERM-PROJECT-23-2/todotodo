@@ -13,6 +13,9 @@ public class NodeListIterator implements Iterator {
         this.curr = curr;
     }
 
+    public Node getRoot(){
+        return root.getCurr();
+    }
     public void setCurr(Node curr) {
         this.curr = curr;
     }

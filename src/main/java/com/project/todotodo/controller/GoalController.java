@@ -28,7 +28,8 @@ public class GoalController {
 
     @PostMapping("/create")
     public String create(GoalForm goalForm){
-        Category category = new Category();
+        categoryService.createCategory(goalForm.getName());
+
         // goal form으로 category 저장하는 코드
         System.out.println(goalForm.getName());
         return "redirect:/";

@@ -38,21 +38,22 @@ public class CategoryService {
         List<CategoryListElement> categoryDtoList = new ArrayList<>();
         for (Node category : categoryList) {
             CategoryListElement categoryDto = new CategoryListElement().ToDTO(category);
+            System.out.println(category.getContent());
             categoryDtoList.add(categoryDto);
         }
         return categoryDtoList;
     }
 
-    public Long createCategory(Long parentId, String name) {
+    public Long createCategory(String name) {
         // Parent id의 nodelist에
         Category category = new Category();
         category.setContent(name);
         category.setLevel(0);
-        Node parent = nodeListIterator.findNodeInRoot(parentId);
-        category.setNodeList(parent);
-        category.setNodeId(categoryRepositoryClass.saveCategoryAndGetId(category));
-        nodeListIterator.addToGivenParent(parentId, category);
-        return 0L;
+        category.setNodeList(nodeListIterator.getRoot());
+        Long categoryId = categoryRepositoryClass.saveCategoryAndGetId(category);
+        category.setNodeId(categoryId);
+        nodeListIterator.addToGivenParent(0L, category);
+        return categoryId;
     }
 
     public void deleteCategoryById(Long id) {
