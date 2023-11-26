@@ -33,16 +33,15 @@ public class NodeListIterator implements Iterator {
     @Override
     public boolean hasNext() {
         ArrayList<Node> allList = getAllChildrenWithDFS(root.getCurr());
-        if(!allList.contains(curr)){
+        if(allList == null || !allList.contains(curr)){
             return false;
         }
         int currInx = allList.indexOf(curr);
         int lastInx = allList.size() - 1;
         if(currInx < lastInx){
             return true;
-        } else{
-            return false;
         }
+        return false;
         /*NodeListIterator currNodeListIterator = curr.getNodeList().getNodeListIterator();
         ArrayList<Node> sibling = currNodeListIterator.getSibling();
         if(sibling.indexOf(curr) < sibling.size() - 1){   // 다음 sibling이 next가 된다
@@ -58,22 +57,19 @@ public class NodeListIterator implements Iterator {
 
     public boolean hasPrevious(){
         ArrayList<Node> allList = getAllChildrenWithDFS(root.getCurr());
-        if(!allList.contains(curr)){
+        if(allList == null || !allList.contains(curr)){
             return false;
         }
         int currInx = allList.indexOf(curr);
         if(currInx > 0){
             return true;
-        } else{
-            return false;
         }
+        return false;
     }
 
     public boolean hasNextCategory(){
         if(hasNext()){
-            ArrayList<Node> allList = getAllChildrenWithDFS(root.getCurr());
-            int nextInx = allList.indexOf(curr) + 1;
-            Node nextNode = allList.get(nextInx);
+            Node nextNode = next();
             if(nextNode.getLevel() == 0){
                 return true;
             }
@@ -83,10 +79,9 @@ public class NodeListIterator implements Iterator {
 
     public Node nextCategory(){
         if(hasNextCategory()){
-            ArrayList<Node> allList = getAllChildrenWithDFS(root.getCurr());
-            int nextInx = allList.indexOf(curr) + 1;
-            curr = allList.get(nextInx);
-            if(curr.getLevel() == 0){
+            Node nextNode = next();
+            if(nextNode.getLevel() == 0){
+                curr = nextNode;
                 return curr;
             }
         }
@@ -98,9 +93,11 @@ public class NodeListIterator implements Iterator {
     public Node next() {
         if(hasNext()){
             ArrayList<Node> allList = getAllChildrenWithDFS(root.getCurr());
-            int nextInx = allList.indexOf(curr) + 1;
-            curr = allList.get(nextInx);
-            return curr;
+            if(allList != null) {
+                int nextInx = allList.indexOf(curr) + 1;
+                curr = allList.get(nextInx);
+                return curr;
+            }
         }
         return null;
     }
@@ -108,25 +105,33 @@ public class NodeListIterator implements Iterator {
     public Node previous(){
         if(hasPrevious()){
             ArrayList<Node> allList = getAllChildrenWithDFS(root.getCurr());
-            int preInx = allList.indexOf(curr) - 1;
-            curr = allList.get(preInx);
-            return curr;
+            if(allList != null) {
+                int preInx = allList.indexOf(curr) - 1;
+                curr = allList.get(preInx);
+                return curr;
+            }
         }
         return null;
     }
 
     public Long nextIndex(){
         ArrayList<Node> allList = getAllChildrenWithDFS(root.getCurr());
-        return allList.indexOf(curr) + 1L;
+        if(allList != null && allList.contains(curr)){
+            return allList.indexOf(curr) + 1L;
+        }
+        return -1L;
     }
 
     public Long previousIndex(){
         ArrayList<Node> allList = getAllChildrenWithDFS(root.getCurr());
-        return allList.indexOf(curr) - 1L;
+        if(allList != null && allList.contains(curr)){
+            return allList.indexOf(curr) - 1L;
+        }
+        return -1L;
     }
 
     public boolean hasChildren(){
-        if(curr != null){
+        if(curr != null && curr.getNodeList() != null){
             if((curr.getNodeList().getChildren() != null)
                     && (curr.getNodeList().getChildren().size() > 0)){
                 return true;
@@ -136,7 +141,7 @@ public class NodeListIterator implements Iterator {
     }
 
     public boolean hasParent(){
-        if(curr != null){
+        if(curr != null && curr.getNodeList() != null){
             if(curr.getNodeList().getParent() != null){
                 return true;
             }
@@ -145,7 +150,7 @@ public class NodeListIterator implements Iterator {
     }
 
     public boolean hasSibling(){
-        if(hasParent()){
+        if(hasParent() && getParent().getNodeList() != null){
             ArrayList<Node> siblings = getParent().getNodeList().getChildren();
             if(siblings != null && siblings.size() > 0){
                 return true;
