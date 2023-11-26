@@ -51,7 +51,8 @@ public class NodeListIterator implements Iterator {
         if(hasNext()){
             ArrayList<Node> allList = getAllChildrenWithDFS(root.getCurr());
             int nextInx = allList.indexOf(curr) + 1;
-            return allList.get(nextInx);
+            curr = allList.get(nextInx);
+            return curr;
         }
         return null;
     }
@@ -60,7 +61,8 @@ public class NodeListIterator implements Iterator {
         if(hasPrevious()){
             ArrayList<Node> allList = getAllChildrenWithDFS(root.getCurr());
             int preInx = allList.indexOf(curr) - 1;
-            return allList.get(preInx);
+            curr = allList.get(preInx);
+            return curr;
         }
         return null;
     }
