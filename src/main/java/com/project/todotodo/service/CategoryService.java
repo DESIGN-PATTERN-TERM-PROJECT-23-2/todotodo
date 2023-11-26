@@ -25,6 +25,7 @@ public class CategoryService {
         CategoryDomain newCategory = new CategoryDomain();
         NodeDomain node = new NodeDomain();
 
+<<<<<<< HEAD
         node.setContent(name);
         newCategory.setNode(node);
 
@@ -39,5 +40,22 @@ public class CategoryService {
     public void deleteCategoryById(Long id) {
         categoryRepository.deleteById(id);
 
+=======
+    public Long createCategory(Long parentId, String name) {
+        // Parent id의 nodelist에
+        Category category = new Category();
+        category.setContent(name);
+        category.setLevel(0);
+        category.setNodeList(new NodeList());
+        category.setNodeId(categoryRepositoryClass.saveCategoryAndGetId(category));
+        nodeListIterator.addToGivenParent(parentId, category);
+        return 0L;
+    }
+
+    public void deleteCategoryById(Long id) {
+        nodeListIterator.remove(id);
+        // categoryRepositoryClass.remove(id);
+        return;
+>>>>>>> b05fa7d (merge 전 커밋)
     }
 }
