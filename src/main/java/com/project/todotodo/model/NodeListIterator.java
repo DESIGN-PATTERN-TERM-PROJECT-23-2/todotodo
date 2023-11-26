@@ -96,10 +96,10 @@ public class NodeListIterator implements Iterator {
     }
 
     // node 검색 -> 그 node 삭제
-    public boolean remove(Node node){
+    public boolean remove(Long nodeId){
         try {
             ArrayList<Node> children = getChildren();
-            children.remove(node);
+            //children.remove(node);
             curr.getNodeList().setChildren(children);
             return true;
         } catch(Exception e) {
