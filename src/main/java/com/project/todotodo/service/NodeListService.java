@@ -1,11 +1,59 @@
 package com.project.todotodo.service;
 
+import com.project.todotodo.model.Node;
+import com.project.todotodo.model.NodeList;
+import com.project.todotodo.model.NodeListIterator;
+import com.project.todotodo.model.Root;
 import com.project.todotodo.repository.NodeListRepository;
-import lombok.RequiredArgsConstructor;
+import com.project.todotodo.repository.NodeListRepositoryClass;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+
 @Service
-@RequiredArgsConstructor
 public class NodeListService {
     private final NodeListRepository nodeListRepository;
+    private NodeList nodeList;
+    private NodeListIterator nodeListIterator;
+
+    private final NodeListRepositoryClass nodeListRepositoryClass;
+    @Autowired
+    public NodeListService(NodeListRepository nodeListRepository, NodeListRepositoryClass nodeListRepositoryClass) {
+        this.nodeListRepository = nodeListRepository;
+        this.nodeListRepositoryClass = nodeListRepositoryClass;
+        this.nodeList = initNodeList();
+    }
+
+    private NodeList initNodeList(){
+        Node root = new Root();
+        // NodeList nodeList = new NodeList(root, null);
+        this.nodeList = new NodeList(root, null);
+        this.nodeListIterator = this.nodeList.createIterator();
+        for (Node element : nodeListRepositoryClass.findCategories(root)) {
+            nodeListIterator.add(element);
+            System.out.println("for -----");
+        }
+
+        while(nodeListIterator.hasNext()){
+            // ArrayList<Node>
+            Node parent = nodeListIterator.next();
+            Node savedCurr = nodeListIterator.getCurr();
+            nodeListIterator.setCurr(parent);
+            ArrayList<Node> children = nodeListRepositoryClass.findByParentId(parent.getNodeId(), parent);
+            if(children != null) {
+                for (Node element : children) {
+                    nodeListIterator.add(element);
+                }
+            }
+            nodeListIterator.setCurr(savedCurr);
+        }
+        nodeListIterator.initCurr();
+        // 이제 iterator로 순회하기...
+        return nodeList;
+    }
+
+    public NodeListIterator getIterator(){
+        return this.nodeListIterator;
+    }
 }
