@@ -50,7 +50,8 @@ public class CategoryService {
     }
 
     public void deleteCategoryById(Long id) {
-        // nodeListIterator.remove(id);
-        // categoryRepositoryclass.remove(id);
+        nodeListIterator.remove(id);
+        categoryRepositoryClass.remove(id);
+        return;
     }
 }
