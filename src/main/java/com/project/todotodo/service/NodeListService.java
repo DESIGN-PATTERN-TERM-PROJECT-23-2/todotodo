@@ -27,7 +27,7 @@ public class NodeListService {
 
     private NodeList initNodeList(){
         Node root = new Root();
-        NodeList nodeList = new NodeList(root, null);
+        // NodeList nodeList = new NodeList(root, null);
         this.nodeList = new NodeList(root, null);
         this.nodeListIterator = this.nodeList.createIterator();
         for (Node element : nodeListRepositoryClass.findCategories(root)) {

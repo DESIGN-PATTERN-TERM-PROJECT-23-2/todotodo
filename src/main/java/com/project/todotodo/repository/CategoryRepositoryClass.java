@@ -21,7 +21,7 @@ public class CategoryRepositoryClass {
     }
 
     public Long saveCategoryAndGetId(Category category) {
-        String sql1 = "INSERT INTO node_lists (node_id) VALUES (NULL)";
+        String sql1 = "INSERT INTO node_lists (parent_id) VALUES (NULL)";
         KeyHolder keyHolder1 = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql1, Statement.RETURN_GENERATED_KEYS);
