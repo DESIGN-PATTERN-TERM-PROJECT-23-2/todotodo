@@ -3,6 +3,7 @@ package com.project.todotodo.service;
 import com.project.todotodo.model.Node;
 import com.project.todotodo.model.NodeList;
 import com.project.todotodo.model.NodeListIterator;
+import com.project.todotodo.model.Root;
 import com.project.todotodo.repository.NodeListRepository;
 import com.project.todotodo.repository.NodeListRepositoryClass;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,11 +26,13 @@ public class NodeListService {
     }
 
     private NodeList initNodeList(){
-        NodeList nodeList = new NodeList();
-        this.nodeList = new NodeList();
+        Node root = new Root();
+        NodeList nodeList = new NodeList(root, null);
+        this.nodeList = new NodeList(root, null);
         this.nodeListIterator = this.nodeList.createIterator();
-        for (Node element : nodeListRepositoryClass.findCategories()) {
+        for (Node element : nodeListRepositoryClass.findCategories(root)) {
             nodeListIterator.add(element);
+            System.out.println("for -----");
         }
 
         while(nodeListIterator.hasNext()){

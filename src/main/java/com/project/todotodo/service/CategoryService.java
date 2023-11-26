@@ -48,7 +48,8 @@ public class CategoryService {
         Category category = new Category();
         category.setContent(name);
         category.setLevel(0);
-        category.setNodeList(new NodeList());
+        Node parent = nodeListIterator.findNodeInRoot(parentId);
+        category.setNodeList(parent);
         category.setNodeId(categoryRepositoryClass.saveCategoryAndGetId(category));
         nodeListIterator.addToGivenParent(parentId, category);
         return 0L;

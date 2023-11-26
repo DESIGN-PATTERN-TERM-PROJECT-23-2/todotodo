@@ -23,12 +23,12 @@ public class NodeListRepositoryClass {
     }
 
 
-    public ArrayList<Node> findCategories() {
+    public ArrayList<Node> findCategories(Node root) {
         List<Category> categoryList = jdbcTemplate.query(
                 "SELECT * FROM nodes WHERE node_id = 0",
                 (resultSet, rowNum) -> {
                     Category category = new Category();
-                    category.setNodeList(new NodeList());
+                    category.setNodeList(root);
                     category.setLevel(resultSet.getInt("level"));
                     category.setContent(resultSet.getString("content"));
                     category.setNodeId(resultSet.getLong("node_id"));
@@ -44,7 +44,7 @@ public class NodeListRepositoryClass {
                 new Object[]{id},
                 (resultSet, rowNum) -> {
                     ToDoList todo = new ToDoList();
-                    todo.setNodeList(new NodeList());
+                    todo.setNodeList(parent);
                     todo.setLevel(resultSet.getInt("level"));
                     todo.setContent(resultSet.getString("content"));
                     todo.setNodeId(resultSet.getLong("node_id"));

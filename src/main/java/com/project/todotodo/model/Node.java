@@ -14,4 +14,8 @@ public abstract class Node {
     private String content;
 
     private int level;
+
+    public void setNodeList(Node parent){
+        this.nodeList = new NodeList(this, parent);
+    }
 }
