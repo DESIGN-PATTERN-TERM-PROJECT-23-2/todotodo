@@ -20,22 +20,35 @@ public class CategoryRepositoryClass {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public long saveCategoryAndGetId(Category category) {
-        String sql = "INSERT INTO categories (content) VALUES (?)";
-
-        KeyHolder keyHolder = new GeneratedKeyHolder();
-
+    public Long saveCategoryAndGetId(Category category) {
+        String sql1 = "INSERT INTO node_lists (node_id) VALUES (NULL)";
+        KeyHolder keyHolder1 = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
-            PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1, category.getContent());
+            PreparedStatement ps = connection.prepareStatement(sql1, Statement.RETURN_GENERATED_KEYS);
             return ps;
-        }, keyHolder);
+        }, keyHolder1);
 
-        if (keyHolder.getKey() != null) {
-            return keyHolder.getKey().longValue();
-        } else {
-            return -1;
-        }
+        String sql2 = "INSERT INTO nodes (content, is_category, level, node_list_id) VALUES (?, ?, ?, ?)";
+        KeyHolder keyHolder2 = new GeneratedKeyHolder();
+        jdbcTemplate.update(connection -> {
+            PreparedStatement ps = connection.prepareStatement(sql2, Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, category.getContent());
+            ps.setInt(2, 1);
+            ps.setInt(3, 0);
+            ps.setLong(4, keyHolder1.getKey().longValue());
+            return ps;
+        }, keyHolder2);
+
+        String sql3 = "INSERT INTO categories (content, node_id) VALUES (?, ?)";
+        jdbcTemplate.update(connection -> {
+            PreparedStatement ps = connection.prepareStatement(sql3, Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, category.getContent());
+            ps.setLong(2, keyHolder2.getKey().longValue());
+            return ps;
+        }, keyHolder2);
+
+        return keyHolder2.getKey().longValue();
+
     }
 
 }

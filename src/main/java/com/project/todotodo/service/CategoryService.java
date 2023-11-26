@@ -1,17 +1,13 @@
 package com.project.todotodo.service;
 
-import com.project.todotodo.domain.CategoryDomain;
-import com.project.todotodo.domain.NodeDomain;
 import com.project.todotodo.dto.Goal.CategoryListElement;
-import com.project.todotodo.dto.Goal.GoalForm;
 
 import com.project.todotodo.model.Category;
 import com.project.todotodo.model.Node;
 import com.project.todotodo.model.NodeList;
 import com.project.todotodo.model.NodeListIterator;
 import com.project.todotodo.repository.CategoryRepository;
-import com.project.todotodo.repository.NodeRepository;
-import lombok.RequiredArgsConstructor;
+import com.project.todotodo.repository.CategoryRepositoryClass;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -24,10 +20,13 @@ public class CategoryService {
     private final NodeListService nodeListService;
     private NodeListIterator nodeListIterator;
 
-    public CategoryService(CategoryRepository categoryRepository, NodeListService nodeListService) {
+    private final CategoryRepositoryClass categoryRepositoryClass;
+
+    public CategoryService(CategoryRepository categoryRepository, NodeListService nodeListService, CategoryRepositoryClass categoryRepositoryClass) {
         this.categoryRepository = categoryRepository;
         this.nodeListService = nodeListService;
         this.nodeListIterator = nodeListService.getIterator();
+        this.categoryRepositoryClass = categoryRepositoryClass;
     }
 
     public List<CategoryListElement> getAllCategories() {
@@ -45,17 +44,13 @@ public class CategoryService {
         category.setContent(name);
         category.setLevel(0);
         category.setNodeList(new NodeList());
-
-
-
+        category.setNodeId(categoryRepositoryClass.saveCategoryAndGetId(category));
         nodeListIterator.addToGivenParent(parentId, category);
-
-
-
         return 0L;
     }
 
     public void deleteCategoryById(Long id) {
         // nodeListIterator.remove(id);
+        // categoryRepositoryclass.remove(id);
     }
 }
