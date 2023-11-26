@@ -15,7 +15,16 @@ public class NodeListIterator implements Iterator {
 
     @Override
     public boolean hasNext() {
-        // TOBEUPDATED
+        NodeListIterator currNodeListIterator = curr.getNodeList().getNodeListIterator();
+        ArrayList<Node> sibling = currNodeListIterator.getSibling();
+        if(sibling.indexOf(curr) < sibling.size() - 1){   // 다음 sibling이 next가 된다
+            return true;
+        } else{ // 첫째 sibling의 첫 child가 next가 된다.
+            NodeListIterator firstSiblingNodeListIterator = sibling.get(0).getNodeList().getNodeListIterator();
+            if(firstSiblingNodeListIterator.hasChildren()){
+                return true;
+            }
+        }
         return false;
     }
 
@@ -24,7 +33,18 @@ public class NodeListIterator implements Iterator {
     }
 
     @Override
-    public ArrayList<Node> next() {
+    public Node next() {
+        NodeListIterator currNodeListIterator = curr.getNodeList().getNodeListIterator();
+        ArrayList<Node> sibling = currNodeListIterator.getSibling();
+        if(sibling.indexOf(curr) < sibling.size() - 1){   // 다음 sibling이 next가 된다
+            int sinx = sibling.indexOf(curr) + 1;
+            return sibling.get(sinx);
+        } else{ // 첫째 sibling의 첫 child가 next가 된다.
+            NodeListIterator firstSiblingNodeListIterator = sibling.get(0).getNodeList().getNodeListIterator();
+            if(firstSiblingNodeListIterator.hasChildren()){
+                return firstSiblingNodeListIterator.getChildren().get(0);
+            }
+        }
         return null;
     }
 
@@ -32,6 +52,25 @@ public class NodeListIterator implements Iterator {
         return null;
     }
 
+    public Long nextIndex(){
+        NodeListIterator currNodeListIterator = curr.getNodeList().getNodeListIterator();
+        ArrayList<Node> sibling = currNodeListIterator.getSibling();
+        if(sibling.indexOf(curr) < sibling.size() - 1){   // 다음 sibling이 next가 된다
+            int sinx = sibling.indexOf(curr) + 1;
+            return sibling.get(sinx).getNodeId();
+        } else{ // 첫째 sibling의 첫 child가 next가 된다.
+            NodeListIterator firstSiblingNodeListIterator = sibling.get(0).getNodeList().getNodeListIterator();
+            if(firstSiblingNodeListIterator.hasChildren()){
+                return firstSiblingNodeListIterator.getChildren().get(0).getNodeId();
+            }
+        }
+        return 0L;
+    }
+
+    public Long previousIndex(){
+
+        return 0L;
+    }
 
     public boolean hasChildren(){
         if(curr != null){
@@ -96,25 +135,18 @@ public class NodeListIterator implements Iterator {
     }
 
     // node 검색 -> 그 node 삭제
-    public boolean remove(Node node){
+    public boolean remove(Long nodeId){
         try {
-            ArrayList<Node> children = getChildren();
-            children.remove(node);
-            curr.getNodeList().setChildren(children);
+            Node target = findNodeInRoot(nodeId);
+            NodeListIterator targetNodeListIterator = target.getNodeList().getNodeListIterator();
+            NodeList parentNodeList = targetNodeListIterator.getParent().getNodeList();
+            ArrayList<Node> targetArrayList = targetNodeListIterator.getSibling();
+            targetArrayList.remove(target);
+            parentNodeList.setChildren(targetArrayList);
             return true;
         } catch(Exception e) {
             return false;
         }
-    }
-
-    public int nextIndex(){
-
-        return 0;
-    }
-
-    public int previousIndex(){
-
-        return 0;
     }
 
     public ArrayList<Node> getCategoryList(){
@@ -166,8 +198,8 @@ public class NodeListIterator implements Iterator {
             if(curr.getNodeId() == targetId){
                 return curr;
             }
-            if(this.hasNext()){
-                needVisit.addAll(this.next());
+            if(this.hasChildren()){
+                needVisit.addAll(this.getChildren());
             }
         }
         return null;
