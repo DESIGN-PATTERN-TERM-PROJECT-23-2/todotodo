@@ -46,6 +46,31 @@ public class NodeListIterator implements Iterator {
         }
     }
 
+    public boolean hasNextCategory(){
+        if(hasNext()){
+            ArrayList<Node> allList = getAllChildrenWithDFS(root.getCurr());
+            int nextInx = allList.indexOf(curr) + 1;
+            curr = allList.get(nextInx);
+            if(curr.getLevel() == 0){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Node nextCategory(){
+        if(hasNextCategory()){
+            ArrayList<Node> allList = getAllChildrenWithDFS(root.getCurr());
+            int nextInx = allList.indexOf(curr) + 1;
+            curr = allList.get(nextInx);
+            if(curr.getLevel() == 0){
+                return curr;
+            }
+        }
+        return null;
+    }
+
+
     @Override
     public Node next() {
         if(hasNext()){
