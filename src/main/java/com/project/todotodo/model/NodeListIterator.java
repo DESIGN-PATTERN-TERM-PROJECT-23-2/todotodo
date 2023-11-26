@@ -50,8 +50,8 @@ public class NodeListIterator implements Iterator {
         if(hasNext()){
             ArrayList<Node> allList = getAllChildrenWithDFS(root.getCurr());
             int nextInx = allList.indexOf(curr) + 1;
-            curr = allList.get(nextInx);
-            if(curr.getLevel() == 0){
+            Node nextNode = allList.get(nextInx);
+            if(nextNode.getLevel() == 0){
                 return true;
             }
         }
