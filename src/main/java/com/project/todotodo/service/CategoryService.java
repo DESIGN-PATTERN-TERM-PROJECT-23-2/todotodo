@@ -40,6 +40,7 @@ public class CategoryService {
     }
 
     public Long createCategory(Long parentId, String name) {
+        // Parent id의 nodelist에
         Category category = new Category();
         category.setContent(name);
         category.setLevel(0);
@@ -51,7 +52,7 @@ public class CategoryService {
 
     public void deleteCategoryById(Long id) {
         nodeListIterator.remove(id);
-        categoryRepositoryClass.remove(id);
+        // categoryRepositoryClass.remove(id);
         return;
     }
 }
