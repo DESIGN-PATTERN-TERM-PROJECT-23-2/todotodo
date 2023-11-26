@@ -38,6 +38,7 @@ public class CategoryService {
         List<CategoryListElement> categoryDtoList = new ArrayList<>();
         for (Node category : categoryList) {
             CategoryListElement categoryDto = new CategoryListElement().ToDTO(category);
+            System.out.println(category.getContent());
             categoryDtoList.add(categoryDto);
         }
         return categoryDtoList;
@@ -49,10 +50,11 @@ public class CategoryService {
         category.setContent(name);
         category.setLevel(0);
         Node parent = nodeListIterator.findNodeInRoot(parentId);
-        category.setNodeList(parent);
-        category.setNodeId(categoryRepositoryClass.saveCategoryAndGetId(category));
+        category.setNodeList(nodeListIterator.getRoot());
+        Long categoryId = categoryRepositoryClass.saveCategoryAndGetId(category);
+        category.setNodeId(categoryId);
         nodeListIterator.addToGivenParent(parentId, category);
-        return 0L;
+        return categoryId;
     }
 
     public void deleteCategoryById(Long id) {
