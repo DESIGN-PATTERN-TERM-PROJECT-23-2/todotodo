@@ -29,7 +29,6 @@ public class TodoListService {
         this.todoListRepositoryClass = todoListRepositoryClass;
     }
 
-    // create할 때 잊지 말고 parent id로 가서 list 레포 행동하
     public void deleteChildrenTodoListById(Long id) {
         ArrayList<Node> children = nodeListIterator.getAllChildrenWithBFS(nodeListIterator.findNodeInRoot(id));
         ListIterator<Node> iterator = children.listIterator(children.size());
@@ -60,7 +59,7 @@ public class TodoListService {
         todo.setComplete(false);
         todo.setDate(time);
         todo.setLevel(parent.getLevel()+1);
-        todo.setNodeList(new NodeList());
+        todo.setNodeList(parent);
 
         Long node_id = todoListRepositoryClass.create(parent, todo);
         todo.setNodeId(node_id);

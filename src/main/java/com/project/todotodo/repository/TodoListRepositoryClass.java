@@ -40,10 +40,14 @@ public class TodoListRepositoryClass {
     }
 
     public Long create(Node parent, ToDoList toDoList){
-        // 1.
-        // 2.
+
+        // 0. nodelist 만들기
+        // 1. Node를 만들기 (nodelistid
+        // 2. Node 만들 때 쓴 node id로 todolist 저장하기
         // 3.
         // 4.
+
+        // parent child 달아주기 (array list)
 
 
         return 0L;

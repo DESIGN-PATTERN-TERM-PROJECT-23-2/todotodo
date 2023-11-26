@@ -25,7 +25,7 @@ public class NodeListRepositoryClass {
 
     public ArrayList<Node> findCategories(Node root) {
         List<Category> categoryList = jdbcTemplate.query(
-                "SELECT * FROM nodes WHERE node_id = 0",
+                "SELECT * FROM nodes WHERE level = 0",
                 (resultSet, rowNum) -> {
                     Category category = new Category();
                     category.setNodeList(root);
