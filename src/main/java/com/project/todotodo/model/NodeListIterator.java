@@ -29,6 +29,16 @@ public class NodeListIterator implements Iterator {
     }
 
     public boolean hasPrevious(){
+        NodeListIterator currNodeListIterator = curr.getNodeList().getNodeListIterator();
+        ArrayList<Node> sibling = currNodeListIterator.getSibling();
+        if(sibling.indexOf(curr) < sibling.size() - 1){   // 이전 sibling이 previous가 된다
+            return true;
+        } else{ // 첫째 sibling의 첫 child가 next가 된다.
+            NodeListIterator firstSiblingNodeListIterator = sibling.get(0).getNodeList().getNodeListIterator();
+            if(firstSiblingNodeListIterator.hasChildren()){
+                return true;
+            }
+        }
         return false;
     }
 
@@ -175,6 +185,27 @@ public class NodeListIterator implements Iterator {
         return allChildren;
     }
 
+    // bfs
+    public ArrayList<Node> getAllChildrenWithBFS(Node target){
+        ArrayList<Node> allChildren = new ArrayList<>();
+        ArrayList<Node> needVisit = new ArrayList<>();
+        needVisit.add(target);
+        Node curr;
+        while(needVisit.size() > 0){
+            curr = needVisit.get(0);
+            needVisit.remove(0);
+            allChildren.add(curr);
+            if(curr.getNodeList().getChildren() != null){
+                ArrayList<Node> children = curr.getNodeList().getChildren();
+                for (int i = 0; i < children.size(); i++) {
+                    needVisit.add(children.get(i));
+                }
+            }
+        }
+        return allChildren;
+    }
+
+
     // if returns -1:  error
     public int getIndexAmongChildren(Node target){
         NodeList targetNodeList = target.getNodeList();
@@ -208,7 +239,9 @@ public class NodeListIterator implements Iterator {
     public boolean addToGivenParent(Long parentId, Node newNode){
         try {
             Node currNode = findNodeInRoot(parentId);
-            currNode.getNodeList().getNodeListIterator().add(newNode);
+            ArrayList<Node> children = currNode.getNodeList().getChildren();
+            children.add(newNode);
+            currNode.getNodeList().setChildren(children);
             return true;
         } catch(Exception e){
             return false;
