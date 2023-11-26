@@ -15,7 +15,15 @@ public class NodeListIterator implements Iterator {
 
     @Override
     public boolean hasNext() {
-        NodeListIterator currNodeListIterator = curr.getNodeList().getNodeListIterator();
+        ArrayList<Node> allList = getAllChildrenWithDFS(root.getCurr());
+        int currInx = allList.indexOf(curr);
+        int lastInx = allList.size() - 1;
+        if(currInx < lastInx){
+            return true;
+        } else{
+            return false;
+        }
+        /*NodeListIterator currNodeListIterator = curr.getNodeList().getNodeListIterator();
         ArrayList<Node> sibling = currNodeListIterator.getSibling();
         if(sibling.indexOf(curr) < sibling.size() - 1){   // 다음 sibling이 next가 된다
             return true;
@@ -25,61 +33,46 @@ public class NodeListIterator implements Iterator {
                 return true;
             }
         }
-        return false;
+        return false;*/
     }
 
     public boolean hasPrevious(){
-        NodeListIterator currNodeListIterator = curr.getNodeList().getNodeListIterator();
-        ArrayList<Node> sibling = currNodeListIterator.getSibling();
-        if(sibling.indexOf(curr) < sibling.size() - 1){   // 이전 sibling이 previous가 된다
+        ArrayList<Node> allList = getAllChildrenWithDFS(root.getCurr());
+        int currInx = allList.indexOf(curr);
+        if(currInx > 0){
             return true;
-        } else{ // 첫째 sibling의 첫 child가 next가 된다.
-            NodeListIterator firstSiblingNodeListIterator = sibling.get(0).getNodeList().getNodeListIterator();
-            if(firstSiblingNodeListIterator.hasChildren()){
-                return true;
-            }
+        } else{
+            return false;
         }
-        return false;
     }
 
     @Override
     public Node next() {
-        NodeListIterator currNodeListIterator = curr.getNodeList().getNodeListIterator();
-        ArrayList<Node> sibling = currNodeListIterator.getSibling();
-        if(sibling.indexOf(curr) < sibling.size() - 1){   // 다음 sibling이 next가 된다
-            int sinx = sibling.indexOf(curr) + 1;
-            return sibling.get(sinx);
-        } else{ // 첫째 sibling의 첫 child가 next가 된다.
-            NodeListIterator firstSiblingNodeListIterator = sibling.get(0).getNodeList().getNodeListIterator();
-            if(firstSiblingNodeListIterator.hasChildren()){
-                return firstSiblingNodeListIterator.getChildren().get(0);
-            }
+        if(hasNext()){
+            ArrayList<Node> allList = getAllChildrenWithDFS(root.getCurr());
+            int nextInx = allList.indexOf(curr) + 1;
+            return allList.get(nextInx);
         }
         return null;
     }
 
     public Node previous(){
+        if(hasPrevious()){
+            ArrayList<Node> allList = getAllChildrenWithDFS(root.getCurr());
+            int preInx = allList.indexOf(curr) - 1;
+            return allList.get(preInx);
+        }
         return null;
     }
 
     public Long nextIndex(){
-        NodeListIterator currNodeListIterator = curr.getNodeList().getNodeListIterator();
-        ArrayList<Node> sibling = currNodeListIterator.getSibling();
-        if(sibling.indexOf(curr) < sibling.size() - 1){   // 다음 sibling이 next가 된다
-            int sinx = sibling.indexOf(curr) + 1;
-            return sibling.get(sinx).getNodeId();
-        } else{ // 첫째 sibling의 첫 child가 next가 된다.
-            NodeListIterator firstSiblingNodeListIterator = sibling.get(0).getNodeList().getNodeListIterator();
-            if(firstSiblingNodeListIterator.hasChildren()){
-                return firstSiblingNodeListIterator.getChildren().get(0).getNodeId();
-            }
-        }
-        return 0L;
+        ArrayList<Node> allList = getAllChildrenWithDFS(root.getCurr());
+        return allList.indexOf(curr) + 1L;
     }
 
     public Long previousIndex(){
-
-        return 0L;
+        ArrayList<Node> allList = getAllChildrenWithDFS(root.getCurr());
+        return allList.indexOf(curr) - 1L;
     }
 
     public boolean hasChildren(){
