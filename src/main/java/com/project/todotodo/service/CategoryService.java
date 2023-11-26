@@ -7,6 +7,7 @@ import com.project.todotodo.dto.Goal.GoalForm;
 
 import com.project.todotodo.model.Category;
 import com.project.todotodo.model.Node;
+import com.project.todotodo.model.NodeList;
 import com.project.todotodo.model.NodeListIterator;
 import com.project.todotodo.repository.CategoryRepository;
 import com.project.todotodo.repository.NodeRepository;
@@ -39,23 +40,19 @@ public class CategoryService {
         return categoryDtoList;
     }
 
-    public GoalForm createCategory(Long parentId, String name) {
+    public Long createCategory(Long parentId, String name) {
         Category category = new Category();
-        //category.
+        category.setContent(name);
+        category.setLevel(0);
+        category.setNodeList(new NodeList());
 
 
-        CategoryDomain newCategory = new CategoryDomain();
-        NodeDomain node = new NodeDomain();
 
-        node.setContent(name);
-        newCategory.setNode(node);
+        nodeListIterator.addToGivenParent(parentId, category);
 
-        CategoryDomain savedCategory = categoryRepository.save(newCategory);
 
-        GoalForm goalForm = new GoalForm();
-        goalForm.setName(savedCategory.getNode().getContent());
 
-        return goalForm;
+        return 0L;
     }
 
     public void deleteCategoryById(Long id) {
