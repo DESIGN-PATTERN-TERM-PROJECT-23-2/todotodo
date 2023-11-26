@@ -38,7 +38,7 @@ public class NodeListRepositoryClass {
         return new ArrayList<>(categoryList);
     }
 
-    public ArrayList<Node> findByParentId(long id, Node parent) {
+    public ArrayList<Node> findByParentId(Long id, Node parent) {
         List<Node> nodeList = jdbcTemplate.query(
                 "SELECT * FROM todo_lists WHERE parent_id = ?",
                 new Object[]{id},
