@@ -1,5 +1,6 @@
 package com.project.todotodo.controller;
 
+import com.project.todotodo.dto.Goal.CategoryListElement;
 import org.springframework.ui.Model;
 import com.project.todotodo.domain.CategoryDomain;
 import com.project.todotodo.dto.Goal.GoalForm;
@@ -35,14 +36,14 @@ public class GoalController {
 
     @GetMapping("/list")
     public String list(Model model){
-        //List<CategoryListElement> categories = categoryService.getAllCategories();
-        //model.addAttribute("categories", categories);
+        List<CategoryListElement> categories = categoryService.getAllCategories();
+        model.addAttribute("categories", categories);
         return "goal/list";
     }
 
     @PostMapping("/delete/{id}")
     public String deleteCategory(@PathVariable Long id) {
-        // categoryService.deleteCategoryById(id);
+        categoryService.deleteCategoryById(id);
         return "redirect:/goal/list"; // 삭제 후 카테고리 목록으로 리다이렉트
     }
 

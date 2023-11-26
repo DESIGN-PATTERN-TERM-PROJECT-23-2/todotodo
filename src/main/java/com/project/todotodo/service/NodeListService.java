@@ -36,4 +36,8 @@ public class NodeListService {
         // 이제 iterator로 순회하기...
         return nodeList;
     }
+
+    public NodeListIterator getIterator(){
+        return this.nodeListIterator;
+    }
 }
