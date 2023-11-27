@@ -23,6 +23,7 @@ public class NodeListService {
         this.nodeListRepository = nodeListRepository;
         this.nodeListRepositoryClass = nodeListRepositoryClass;
         this.nodeList = initNodeList();
+        System.out.println("created NodeListService-------");
     }
 
     private NodeList initNodeList(){
@@ -32,7 +33,7 @@ public class NodeListService {
         this.nodeListIterator = this.nodeList.createIterator();
         for (Node element : nodeListRepositoryClass.findCategories(root)) {
             nodeListIterator.add(element);
-            System.out.println("for -----");
+            System.out.println("added category -----");
         }
 
         while(nodeListIterator.hasNext()){
