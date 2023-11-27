@@ -266,16 +266,31 @@ public class NodeListIterator implements Iterator {
 
 
     // if returns -1:  error
-    public int getIndexAmongChildren(Node target){
-        NodeList targetNodeList = target.getNodeList();
+    public Long getIndexAmongChildren(Node target){
+        // if target Node does not exists
+        if(findNodeInRoot(target.getNodeId()) == null){
+            return -1L;
+        }
+
+        Node savedCurr = curr;
+        curr = target;
+        ArrayList<Node> siblings = getSibling();
+        if(siblings == null || siblings.size() == 0){
+            return -1L;
+        }
+        int inx = siblings.indexOf(target);
+        Long index = Long.valueOf(inx);
+
+        /*NodeList targetNodeList = target.getNodeList();
         if(targetNodeList.getNodeListIterator().hasPrevious()){
             NodeList parentNodeList = targetNodeList.getParent().getNodeList();
             ArrayList<Node> siblings = parentNodeList.getChildren();
-            int index = siblings.indexOf(target);
+            Long index = Long.valueOf(siblings.indexOf(target));
             return index;
         }
-        System.out.println("getIndexAmongChildren():: Error occurred");
-        return -1;
+        System.out.println("getIndexAmongChildren():: Error occurred");*/
+        curr = savedCurr;
+        return index;
     }
 
     public Node findNodeInRoot(Long targetId){
@@ -312,6 +327,7 @@ public class NodeListIterator implements Iterator {
 
     public void printAllWithDFS(){
         ArrayList<Node> all = getAllChildrenWithDFS(getRoot());
+        System.out.println("DFS print all -----------------------");
         for(Node node: all){
             System.out.println(node.getNodeId());
         }
@@ -319,6 +335,7 @@ public class NodeListIterator implements Iterator {
 
     public void printAllWithBFS(){
         ArrayList<Node> all = getAllChildrenWithBFS(getRoot());
+        System.out.println("BFS print all -----------------------");
         for(Node node: all){
             System.out.println(node.getNodeId());
         }

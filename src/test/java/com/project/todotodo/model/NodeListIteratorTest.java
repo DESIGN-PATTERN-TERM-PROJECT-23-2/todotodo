@@ -110,4 +110,13 @@ class NodeListIteratorTest {
         System.out.println("find done----");
     }
 
+    @Test
+    void getIndexAmongChildren(){
+        Node root = nodeListIterator.getRoot();
+        Node node = nodeListIterator.findNodeInRoot(5L);
+        Long inx = nodeListIterator.getIndexAmongChildren(node);
+        System.out.println(inx);
+        nodeListIterator.printAllWithDFS();
+    }
+
 }
