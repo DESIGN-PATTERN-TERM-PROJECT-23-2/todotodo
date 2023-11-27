@@ -12,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.event.annotation.BeforeTestClass;
 
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -22,17 +23,25 @@ class NodeListIteratorTest {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
+    static private JdbcTemplate sJdbcTemplate;
 
-    private NodeList nodeList;
-    private NodeListIterator nodeListIterator;
+
+    static private NodeList nodeList;
+    static private NodeListIterator nodeListIterator;
+
+
+    public NodeListIteratorTest(){
+        this.sJdbcTemplate = jdbcTemplate;
+        System.out.println("post construct ------");
+    }
 
     @BeforeEach
     public void setup(){
         Node root = new Root();
         // NodeList nodeList = new NodeList(root, null);
-        this.nodeList = new NodeList(root, null);
-        this.nodeListIterator = nodeList.createIterator();
-        NodeListRepositoryClass nodeListRepositoryClass = new NodeListRepositoryClass(this.jdbcTemplate);
+        nodeList = new NodeList(root, null);
+        nodeListIterator = nodeList.createIterator();
+        NodeListRepositoryClass nodeListRepositoryClass = new NodeListRepositoryClass(jdbcTemplate);
         for (Node element : nodeListRepositoryClass.findCategories(root)) {
             nodeListIterator.add(element);
             System.out.println("added category -----");
@@ -54,32 +63,31 @@ class NodeListIteratorTest {
         nodeListIterator.initCurr();
     }
 
-
-    @Test
-    void getCategoryList() {
-
-    }
-
     @Test
     void getAllChildrenWithDFS() {
         Node root = nodeListIterator.getRoot();
         ArrayList<Node> all = nodeListIterator.getAllChildrenWithDFS(root);
+        ArrayList<Node> allBFS = nodeListIterator.getAllChildrenWithBFS(root);
         System.out.println("dfs done");
+        while(nodeListIterator.hasNext()){
+            Node node = nodeListIterator.next();
+            System.out.println(node.getNodeId());
+        }
+        System.out.println("next done");
+        nodeListIterator.initCurr();
+        nodeListIterator.next();
+        Node pre = nodeListIterator.previous();
+        nodeListIterator.next();
+        //System.out.println(pre.getNodeId()); // error here b.c. it
+        Node parent = nodeListIterator.getParent();
+        System.out.println(parent.getNodeId());
+        ArrayList<Node> children = nodeListIterator.getChildren();
+        ArrayList<Node> categories = nodeListIterator.getCategoryList();
+        ArrayList<Node> siblings = nodeListIterator.getSibling();
+        System.out.println("test done----------");
     }
 
-    @Test
-    void getAllChildrenWithBFS() {
-    }
 
-    @Test
-    void getIndexAmongChildren() {
-    }
-
-    @Test
-    void findNodeInRoot() {
-    }
-
-    @Test
-    void addToGivenParent() {
-    }
+    // remove error1!!
+    // findNodeInRoot error!!!!
 }
