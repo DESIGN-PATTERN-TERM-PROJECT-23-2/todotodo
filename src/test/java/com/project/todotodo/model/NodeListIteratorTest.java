@@ -5,6 +5,7 @@ import com.project.todotodo.service.NodeListService;
 import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -87,7 +88,26 @@ class NodeListIteratorTest {
         System.out.println("test done----------");
     }
 
+    @Test
+    void findNodeInRoot(){
+        Node root = nodeListIterator.getRoot();
+        Node node = nodeListIterator.findNodeInRoot(5L);
+        System.out.println("find done----");
+    }
 
-    // remove error1!!
-    // findNodeInRoot error!!!!
+    @Test
+    void remove(){
+        Node root = nodeListIterator.getRoot();
+
+        Node node = nodeListIterator.findNodeInRoot(5L);
+        nodeListIterator.printAllWithDFS();
+
+        nodeListIterator.remove(5L);
+
+        Node rnode = nodeListIterator.findNodeInRoot(5L);
+        nodeListIterator.printAllWithDFS();
+
+        System.out.println("find done----");
+    }
+
 }

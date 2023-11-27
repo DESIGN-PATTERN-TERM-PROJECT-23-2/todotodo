@@ -199,13 +199,21 @@ public class NodeListIterator implements Iterator {
     public boolean remove(Long nodeId){
         try {
             Node target = findNodeInRoot(nodeId);
+            Node savedCurr = curr;
+            curr = target;
+            ArrayList<Node> siblings = getSibling();
+            siblings.remove(target);
+            curr = savedCurr;
+/*
             NodeListIterator targetNodeListIterator = target.getNodeList().getNodeListIterator();
             NodeList parentNodeList = targetNodeListIterator.getParent().getNodeList();
             ArrayList<Node> targetArrayList = targetNodeListIterator.getSibling();
             targetArrayList.remove(target);
             parentNodeList.setChildren(targetArrayList);
+*/
             return true;
         } catch(Exception e) {
+            System.out.println("remove failed!!!!!!!!!!!------------");
             return false;
         }
     }
@@ -273,17 +281,20 @@ public class NodeListIterator implements Iterator {
     public Node findNodeInRoot(Long targetId){
         ArrayList<Node> needVisit = new ArrayList<Node>();
         needVisit.add(root.getCurr());
-        Node curr;
+        Node savedCurr = curr;
         while(needVisit.size() > 0){
             curr = needVisit.get(needVisit.size()-1);
             needVisit.remove(needVisit.size()-1);
             if(curr.getNodeId() == targetId){
-                return curr;
+                Node ret = curr;
+                curr = savedCurr;
+                return ret;
             }
             if(this.hasChildren()){
                 needVisit.addAll(this.getChildren());
             }
         }
+        curr = savedCurr;
         return null;
     }
 
@@ -296,6 +307,20 @@ public class NodeListIterator implements Iterator {
             return true;
         } catch(Exception e){
             return false;
+        }
+    }
+
+    public void printAllWithDFS(){
+        ArrayList<Node> all = getAllChildrenWithDFS(getRoot());
+        for(Node node: all){
+            System.out.println(node.getNodeId());
+        }
+    }
+
+    public void printAllWithBFS(){
+        ArrayList<Node> all = getAllChildrenWithBFS(getRoot());
+        for(Node node: all){
+            System.out.println(node.getNodeId());
         }
     }
 
