@@ -22,6 +22,7 @@ public class NodeList {
         this.curr = curr;
         this.parent = parent;
         this.children = new ArrayList<>();
+        curr.setNodeList(this);
     }
 
     public NodeListIterator createIterator(){

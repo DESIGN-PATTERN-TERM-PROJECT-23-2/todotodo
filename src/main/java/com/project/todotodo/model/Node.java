@@ -18,4 +18,7 @@ public abstract class Node {
     public void setNodeList(Node parent){
         this.nodeList = new NodeList(this, parent);
     }
+    public void setNodeList(NodeList nodeList){
+        this.nodeList = nodeList;
+    }
 }
