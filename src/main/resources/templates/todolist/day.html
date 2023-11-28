@@ -23,9 +23,9 @@
                     <ul>
                         <li th:each="element : ${category.todoListElementList}">
                             <span th:text="${element.content}"></span>
-                            <span th:text="${element.nodeId}"></span>
-                            <span th:text="${element.todoListId}"></span>
-                            <button class="addButton" th:data-nodeId="${element.nodeId}" th:data-categoryId="${category.categoryId}">Add</button>
+                            <span th:text="${element.NodeId}"></span>
+                            <span th:text="${element.TodoListId}"></span>
+                            <button class="addButton" th:data-nodeId="${element.NodeId}" th:data-categoryId="${category.CategoryId}">Add</button>
                         </li>
                     </ul>
                 </li>
