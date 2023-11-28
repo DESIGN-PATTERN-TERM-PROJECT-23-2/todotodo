@@ -32,9 +32,9 @@ public class TodoListController {
             Model model) {
 
         LocalDate date = LocalDate.of(year, month, day);
-        CategoryList categoryList = nodeListService.getCategoryListByDate(date);
+        //CategoryList categoryList = nodeListService.getCategoryListByDate(date);
         model.addAttribute("date", date);
-        model.addAttribute("categoryList", categoryList);
+        //model.addAttribute("categoryList", categoryList);
         return "todolist/day"; // HTML 템플릿의 이름 (day.html)
     }
 
