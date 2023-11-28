@@ -38,7 +38,7 @@ public class CategoryService {
         List<Node> categoryList = nodeListIterator.getCategoryList();
         List<CategoryListElement> categoryDtoList = new ArrayList<>();
         for (Node category : categoryList) {
-            CategoryListElement categoryDto = new CategoryListElement().ToDTO(category);
+            CategoryListElement categoryDto = new CategoryListElement().ToDTO((Category)category);
             System.out.println(category.getContent());
             categoryDtoList.add(categoryDto);
         }
@@ -53,6 +53,7 @@ public class CategoryService {
         category.setNodeList(nodeListIterator.getRoot());
         Long categoryId = categoryRepositoryClass.saveCategoryAndGetId(category);
         category.setNodeId(categoryId);
+        category.setCategoryId(categoryId);
         nodeListIterator.addToGivenParent(0L, category);
         return categoryId;
     }

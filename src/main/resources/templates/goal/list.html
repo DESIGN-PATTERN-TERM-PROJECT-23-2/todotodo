@@ -17,7 +17,7 @@
     <tr th:each="category : ${categories}">
         <td th:text="${category.categoryId}">Category ID</td>
         <td th:text="${category.nodeId}">Node ID</td>
-        <td th:text="${category.content}">Node ID</td>
+        <td th:text="${category.content}">Node Content</td>
         <td>
             <form th:action="@{/goal/delete/{id}(id=${category.categoryId})}" method="post">
                 <button type="submit">Delete</button>

@@ -25,6 +25,18 @@ public class NodeListRepositoryClass {
 
     public ArrayList<Node> findCategories(Node root) {
         List<Category> categoryList = jdbcTemplate.query(
+                "SELECT * FROM nodes INNER JOIN categories ON nodes.node_id WHERE level = 0",
+                (resultSet, rowNum) -> {
+                    Category category = new Category();
+                    category.setNodeList(root);
+                    category.setLevel(resultSet.getInt("level"));
+                    category.setContent(resultSet.getString("content"));
+                    category.setNodeId(resultSet.getLong("node_id"));
+                    category.setCategoryId(resultSet.getLong("category_id"));
+                    return category;
+                });
+        /*
+        List<Category> categoryList = jdbcTemplate.query(
                 "SELECT * FROM nodes WHERE level = 0",
                 (resultSet, rowNum) -> {
                     Category category = new Category();
@@ -34,6 +46,7 @@ public class NodeListRepositoryClass {
                     category.setNodeId(resultSet.getLong("node_id"));
                     return category;
                 });
+         */
 
         return new ArrayList<>(categoryList);
     }

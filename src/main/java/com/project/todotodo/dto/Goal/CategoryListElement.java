@@ -9,13 +9,15 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CategoryListElement {
-    private long NodeId;
+    private Long nodeId;
+    private Long categoryId;
     private String content;
 
-    public CategoryListElement ToDTO(Node node){
+    public CategoryListElement ToDTO(Category node){
         CategoryListElement dto = new CategoryListElement();
         dto.setNodeId(node.getNodeId());
         dto.setContent(node.getContent());
+        dto.setCategoryId(node.getCategoryId());
         return dto;
     }
 }
