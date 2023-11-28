@@ -19,7 +19,7 @@
         <td th:text="${category.nodeId}">Node ID</td>
         <td th:text="${category.content}">Node Content</td>
         <td>
-            <form th:action="@{/goal/delete/{id}(id=${category.categoryId})}" method="post">
+            <form th:action="@{/goal/delete/{id}(id=${category.nodeId})}" method="post">
                 <button type="submit">Delete</button>
             </form>
         </td>

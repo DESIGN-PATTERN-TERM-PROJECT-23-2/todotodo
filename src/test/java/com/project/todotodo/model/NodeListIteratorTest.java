@@ -67,8 +67,8 @@ class NodeListIteratorTest {
     @Test
     void getAllChildrenWithDFS() {
         Node root = nodeListIterator.getRoot();
-        ArrayList<Node> all = nodeListIterator.getAllChildrenWithDFS(root);
-        ArrayList<Node> allBFS = nodeListIterator.getAllChildrenWithBFS(root);
+        ArrayList<Node> all = nodeListIterator.getAllTreeWithDFS(root);
+        ArrayList<Node> allBFS = nodeListIterator.getAllTreeWithBFS(root);
         System.out.println("dfs done");
         while(nodeListIterator.hasNext()){
             Node node = nodeListIterator.next();

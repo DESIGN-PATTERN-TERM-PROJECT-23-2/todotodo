@@ -226,6 +226,15 @@ public class NodeListIterator implements Iterator {
 
     // dfs
     public ArrayList<Node> getAllChildrenWithDFS(Node target){
+        ArrayList<Node> allChildren = getAllTreeWithDFS(target);
+        if(allChildren == null){
+            return null;
+        }
+        allChildren.remove(0);
+        return allChildren;
+    }
+
+    public ArrayList<Node> getAllTreeWithDFS(Node target){
         if(target == null) {return null;}
         ArrayList<Node> allChildren = new ArrayList<>();
         ArrayList<Node> needVisit = new ArrayList<>();
@@ -247,6 +256,15 @@ public class NodeListIterator implements Iterator {
 
     // bfs
     public ArrayList<Node> getAllChildrenWithBFS(Node target){
+        ArrayList<Node> all = getAllTreeWithBFS(target);
+        if(all == null){
+            return null;
+        }
+        all.remove(0);
+        return all;
+    }
+
+    public ArrayList<Node> getAllTreeWithBFS(Node target){
         if(target == null) {return null;}
         ArrayList<Node> allChildren = new ArrayList<>();
         ArrayList<Node> needVisit = new ArrayList<>();
@@ -328,7 +346,7 @@ public class NodeListIterator implements Iterator {
     }
 
     public void printAllWithDFS(){
-        ArrayList<Node> all = getAllChildrenWithDFS(getRoot());
+        ArrayList<Node> all = getAllTreeWithDFS(getRoot());
         System.out.println("DFS print all -----------------------");
         for(Node node: all){
             System.out.println(node.getNodeId());
@@ -336,7 +354,7 @@ public class NodeListIterator implements Iterator {
     }
 
     public void printAllWithBFS(){
-        ArrayList<Node> all = getAllChildrenWithBFS(getRoot());
+        ArrayList<Node> all = getAllTreeWithBFS(getRoot());
         System.out.println("BFS print all -----------------------");
         for(Node node: all){
             System.out.println(node.getNodeId());
