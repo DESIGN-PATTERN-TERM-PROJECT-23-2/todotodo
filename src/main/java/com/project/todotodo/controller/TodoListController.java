@@ -32,27 +32,27 @@ public class TodoListController {
 
     @GetMapping("/{year}/{month}/{day}")
     public String getTasksByDate(
-            @PathVariable int year,
-            @PathVariable int month,
-            @PathVariable int day,
+            @PathVariable Long year,
+            @PathVariable Long month,
+            @PathVariable Long day,
             Model model) {
 
-        LocalDate date = LocalDate.of(year, month, day);
+        LocalDate date = LocalDate.of(year.intValue(), month.intValue(), day.intValue());
         List<CategoryList> categoryLists = nodeListService.getCategoryListByDate(date);
         model.addAttribute("date", date);
         model.addAttribute("categoryLists", categoryLists);
-        model.addAttribute("year", year);
-        model.addAttribute("month", month);
-        model.addAttribute("day", day);
+        model.addAttribute("tyear", year);
+        model.addAttribute("tmonth", month);
+        model.addAttribute("tday", day);
 
         return "todolist/day"; // HTML 템플릿의 이름 (day.html)
     }
 
-    @GetMapping("/create/{year}/{month}/{day}/{nodeId}")
+    @PostMapping("/create/{year}/{month}/{day}/{nodeId}")
     public String createTodo(
-            @PathVariable int year,
-            @PathVariable int month,
-            @PathVariable int day,
+            @PathVariable Long year,
+            @PathVariable Long month,
+            @PathVariable Long day,
             @PathVariable Long nodeId,
             Model model){
         model.addAttribute("year", year);
