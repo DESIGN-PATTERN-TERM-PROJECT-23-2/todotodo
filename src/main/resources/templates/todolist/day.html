@@ -25,7 +25,14 @@
                             <span th:text="${element.content}"></span>
                             <span th:text="${element.NodeId}"></span>
                             <span th:text="${element.TodoListId}"></span>
-                            <button class="addButton" th:data-nodeId="${element.NodeId}" th:data-categoryId="${category.CategoryId}">Add</button>
+                            <form th:action="@{/todolist/create/${year}/${month}/${day}/{nodeId}(nodeId=${element.nodeId})}" method="get">
+                                <button class="addButton">Add</button>
+                            </form>
+                            <!--
+                            <form th:action="@{/todolist/create/{year}/{month}/{day}/{nodeId}(nodeId=${element.nodeId})}" method="post">
+                                <button class="addButton" th:data-nodeId="${element.NodeId}" th:data-categoryId="${category.CategoryId}">Add</button>
+                            </form>
+                            -->
                         </li>
                     </ul>
                 </li>
@@ -36,6 +43,7 @@
         </div>
     </div>
 </div>
+<!--
 <script>
     // 버튼 클릭 시 서버로 데이터 전송
     document.querySelectorAll('.addButton').forEach(button => {
@@ -59,5 +67,6 @@
         });
     });
 </script>
+-->
 </body>
 </html>
