@@ -30,12 +30,19 @@ public class TodoListService {
     }
 
     public void deleteChildrenTodoListById(Long id) {
-        ArrayList<Node> children = nodeListIterator.getAllChildrenWithBFS(nodeListIterator.findNodeInRoot(id));
-        ListIterator<Node> iterator = children.listIterator(children.size());
+        Node target = nodeListIterator.findNodeInRoot(id);
+        ArrayList<Node> children = nodeListIterator.getAllChildrenWithBFS(target);
 
+        if(children == null){
+            System.out.println("TodoListService.java : deleteChildrenTodoListById() ::no children of given id");
+            return;
+        }
+
+        ListIterator<Node> iterator = children.listIterator(children.size());
         while (iterator.hasPrevious()) {
             Node currentNode = iterator.previous();
-            deleteSingleTodoListById(currentNode.getNodeId());
+            //deleteSingleTodoListById(currentNode.getNodeId());
+            deleteChildrenTodoListById(currentNode.getNodeId());
         }
         return;
     }

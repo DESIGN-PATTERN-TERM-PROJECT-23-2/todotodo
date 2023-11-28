@@ -226,6 +226,7 @@ public class NodeListIterator implements Iterator {
 
     // dfs
     public ArrayList<Node> getAllChildrenWithDFS(Node target){
+        if(target == null) {return null;}
         ArrayList<Node> allChildren = new ArrayList<>();
         ArrayList<Node> needVisit = new ArrayList<>();
         needVisit.add(target);
@@ -246,6 +247,7 @@ public class NodeListIterator implements Iterator {
 
     // bfs
     public ArrayList<Node> getAllChildrenWithBFS(Node target){
+        if(target == null) {return null;}
         ArrayList<Node> allChildren = new ArrayList<>();
         ArrayList<Node> needVisit = new ArrayList<>();
         needVisit.add(target);
