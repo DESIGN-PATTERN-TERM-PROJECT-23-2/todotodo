@@ -75,6 +75,7 @@ public class NodeListRepositoryClass {
                     todo.setLevel(resultSet.getInt("n.level"));
                     todo.setContent(resultSet.getString("n.content"));
                     todo.setNodeId(resultSet.getLong("n.node_id"));
+                    todo.setTodoListId(resultSet.getLong("tl.todo_list_id"));
                     todo.setParent(parent);
                     todo.setComplete(resultSet.getInt("tl.is_complete") == 1);
                     Timestamp timestamp = resultSet.getTimestamp("tl.date");

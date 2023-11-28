@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 @Setter
 public class ToDoList extends Node{
     private Node parent;
+    private Long todoListId;
 
     private boolean isComplete;
 

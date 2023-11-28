@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
+
 @Repository
 public class TodoListRepositoryClass {
     private final JdbcTemplate jdbcTemplate;
@@ -39,8 +41,8 @@ public class TodoListRepositoryClass {
         jdbcTemplate.update(sql5, toDoList.getNodeId());
     }
 
-    public Long create(Node parent, ToDoList toDoList){
-
+    public ArrayList<Long> create(Node parent, ToDoList toDoList){
+        ArrayList<Long> ids = new ArrayList<>(); // node_id, todo_list_id
         // 0. nodelist 만들기
         // 1. Node를 만들기 (nodelistid
         // 2. Node 만들 때 쓴 node id로 todolist 저장하기
@@ -50,7 +52,7 @@ public class TodoListRepositoryClass {
         // parent child 달아주기 (array list)
 
 
-        return 0L;
+        return ids;
     }
 
 }

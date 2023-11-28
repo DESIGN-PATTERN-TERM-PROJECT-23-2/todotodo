@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Controller
 @RequestMapping( value = "/todolist",  produces = "application/json;charset=utf8")
@@ -32,9 +33,9 @@ public class TodoListController {
             Model model) {
 
         LocalDate date = LocalDate.of(year, month, day);
-        //CategoryList categoryList = nodeListService.getCategoryListByDate(date);
+        List<CategoryList> categoryLists = nodeListService.getCategoryListByDate(date);
         model.addAttribute("date", date);
-        //model.addAttribute("categoryList", categoryList);
+        model.addAttribute("categoryLists", categoryLists);
         return "todolist/day"; // HTML 템플릿의 이름 (day.html)
     }
 

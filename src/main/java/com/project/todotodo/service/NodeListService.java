@@ -1,10 +1,8 @@
 package com.project.todotodo.service;
 
 import com.project.todotodo.dto.TodoList.CategoryList;
-import com.project.todotodo.model.Node;
-import com.project.todotodo.model.NodeList;
-import com.project.todotodo.model.NodeListIterator;
-import com.project.todotodo.model.Root;
+import com.project.todotodo.dto.TodoList.TodoListElement;
+import com.project.todotodo.model.*;
 import com.project.todotodo.repository.NodeListRepository;
 import com.project.todotodo.repository.NodeListRepositoryClass;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class NodeListService {
@@ -60,10 +59,36 @@ public class NodeListService {
         return this.nodeListIterator;
     }
 
-    public CategoryList getCategoryListByDate(LocalDate date){
-        CategoryList categoryList = new CategoryList();
+    public List<CategoryList> getCategoryListByDate(LocalDate date){
+        List<CategoryList> categoryLists = new ArrayList<>();
+
+        ArrayList<Node> categories = nodeListIterator.getCategoryList();
+        for(Node node: categories){
+            Category category = (Category) node;
+            CategoryList categoryList = new CategoryList();
+
+            Long nodeId = category.getNodeId();
+            categoryList.setNodeId(nodeId);
+            categoryList.setCategoryId(category.getCategoryId());
+            categoryList.setContent(category.getContent());
+            List<TodoListElement> todoListElementList = getAllTodoListsOfCategoryByDate(nodeId, date);
+            categoryList.setTodoListElementList(todoListElementList);
+
+            categoryLists.add(categoryList);
+        }
         // to be updated
-        return categoryList;
+        return categoryLists;
+    }
+
+    public List<TodoListElement> getAllTodoListsOfCategoryByDate(Long nodeIdOfCategory, LocalDate date){
+        List<ToDoList> todolists = nodeListIterator.getTodoListByCategoryDate(nodeIdOfCategory, date);
+        List<TodoListElement> todolistDtoList = new ArrayList<>();
+        for (ToDoList todolist : todolists) {
+            TodoListElement todolistDto = new TodoListElement().toDTO(todolist);
+            System.out.println(todolist.getContent());
+            todolistDtoList.add(todolistDto);
+        }
+        return todolistDtoList;
     }
 
 }

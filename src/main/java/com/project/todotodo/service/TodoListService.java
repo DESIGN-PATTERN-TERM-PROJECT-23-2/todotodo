@@ -1,15 +1,16 @@
 package com.project.todotodo.service;
 
-import com.project.todotodo.model.Node;
-import com.project.todotodo.model.NodeList;
-import com.project.todotodo.model.NodeListIterator;
-import com.project.todotodo.model.ToDoList;
+import com.project.todotodo.dto.Goal.CategoryListElement;
+import com.project.todotodo.dto.TodoList.TodoListElement;
+import com.project.todotodo.model.*;
 import com.project.todotodo.repository.TodoListRepository;
 import com.project.todotodo.repository.TodoListRepositoryClass;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ListIterator;
 
 @Service
@@ -67,11 +68,24 @@ public class TodoListService {
         todo.setLevel(parent.getLevel()+1);
         todo.setNodeList(parent);
 
+        /*
         Long node_id = todoListRepositoryClass.create(parent, todo);
         todo.setNodeId(node_id);
+        */
+
+        // node_id, todo_list_id
+        ArrayList<Long> ids = todoListRepositoryClass.create(parent, todo);
+        Long node_id = ids.get(0);
+        Long todo_list_id = ids.get(1);
+        todo.setNodeId(node_id);
+        todo.setTodoListId(todo_list_id);
 
         nodeListIterator.addToGivenParent(parent_id, todo);
 
         return node_id;
     }
+
+
+
+
 }

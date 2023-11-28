@@ -1,7 +1,10 @@
 package com.project.todotodo.model;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Queue;
 
 public class NodeListIterator implements Iterator {
@@ -360,6 +363,26 @@ public class NodeListIterator implements Iterator {
             System.out.println(node.getNodeId());
         }
     }
+
+    public List<ToDoList> getTodoListByCategoryDate(Long nodeIdOfCategory, LocalDate targetDate){
+        List<ToDoList> toDoLists = new ArrayList<>();
+        Node root = getRoot();
+        Node category = findNodeInRoot(nodeIdOfCategory);
+        if(category == null || category.getLevel() != 0){
+            System.out.println("NodeListIterator.java: getDooListByCategoryDate:: id no matched with categories");
+            return null;
+        }
+        ArrayList<Node> all = getAllChildrenWithDFS(category);
+        for(Node node: all){
+            ToDoList toDoList = (ToDoList) node;
+            LocalDate toDoListDate = toDoList.getDate().toLocalDate();
+            if(toDoListDate.isEqual(targetDate)){
+                toDoLists.add(toDoList);
+            }
+        }
+        return toDoLists;
+    }
+
 
     /*public int findLevel(Node node){
         return node.getLevel();
