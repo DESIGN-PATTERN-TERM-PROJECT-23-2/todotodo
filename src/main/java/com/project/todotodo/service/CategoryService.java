@@ -34,6 +34,7 @@ public class CategoryService {
     }
 
     public List<CategoryListElement> getAllCategories() {
+        this.nodeListIterator = nodeListService.getIterator();
         List<Node> categoryList = nodeListIterator.getCategoryList();
         List<CategoryListElement> categoryDtoList = new ArrayList<>();
         for (Node category : categoryList) {
