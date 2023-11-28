@@ -1,5 +1,6 @@
 package com.project.todotodo.service;
 
+import com.project.todotodo.dto.TodoList.CategoryList;
 import com.project.todotodo.model.Node;
 import com.project.todotodo.model.NodeList;
 import com.project.todotodo.model.NodeListIterator;
@@ -9,6 +10,7 @@ import com.project.todotodo.repository.NodeListRepositoryClass;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 @Service
@@ -57,4 +59,11 @@ public class NodeListService {
     public NodeListIterator getIterator(){
         return this.nodeListIterator;
     }
+
+    public CategoryList getCategoryListByDate(LocalDate date){
+        CategoryList categoryList = new CategoryList();
+        // to be updated
+        return categoryList;
+    }
+
 }
