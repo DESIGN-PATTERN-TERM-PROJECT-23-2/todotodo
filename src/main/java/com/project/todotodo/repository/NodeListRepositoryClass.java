@@ -25,7 +25,7 @@ public class NodeListRepositoryClass {
 
     public ArrayList<Node> findCategories(Node root) {
         List<Category> categoryList = jdbcTemplate.query(
-                "SELECT * FROM nodes INNER JOIN categories ON nodes.node_id WHERE level = 0",
+                "SELECT * FROM nodes INNER JOIN categories ON nodes.node_id = categories.node_id WHERE level = 0",
                 (resultSet, rowNum) -> {
                     Category category = new Category();
                     category.setNodeList(root);
