@@ -6,6 +6,8 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.ArrayList;
 
 @Entity
 @Getter
@@ -17,9 +19,10 @@ public class NodeListDomain {
     @Column(name = "node_list_id")
     private Long nodeListId;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "parent_id")
     private NodeDomain parent;
 
-
+    @OneToMany(mappedBy = "nodeList")
+    private List<NodeDomain> nodes = new ArrayList<>();
 }

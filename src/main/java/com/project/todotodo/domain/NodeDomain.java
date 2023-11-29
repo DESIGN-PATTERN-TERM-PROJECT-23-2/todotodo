@@ -26,5 +26,4 @@ public class NodeDomain {
 
     @Column(name = "is_category")
     private boolean isCategory;
-
 }
