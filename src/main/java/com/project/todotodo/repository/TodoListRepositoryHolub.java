@@ -4,6 +4,8 @@ import com.holub.database.CSVImporter;
 import com.holub.database.Database;
 import com.holub.database.Table;
 import com.holub.database.TableFactory;
+import com.holub.text.ParseFailure;
+import com.project.todotodo.Singleton.CategoryIndexSingleton;
 
 import java.io.File;
 import java.io.FileReader;
@@ -25,11 +27,19 @@ public class TodoListRepositoryHolub {
 
 
     private void insertData() throws IOException {
+        try {
 
-        Reader in_name = new FileReader("todo_lists.csv");
-        CSVImporter csvImporter = new CSVImporter(in_name);
-        name = TableFactory.create(csvImporter);
+            Reader in_name = new FileReader("todo_lists.csv");
+            CSVImporter csvImporter = new CSVImporter(in_name);
+            name = TableFactory.create(csvImporter);
 
-        database = new Database(new File("."));
+            database = new Database(new File("."));
+            Table table = database.execute("select * from todo_lists");
+            Long nextIdx = 2L +1L;
+            // 수정
+            CategoryIndexSingleton.getInstance().setIndex(nextIdx);
+        } catch (IOException | ParseFailure e){
+            e.printStackTrace();
+        }
     }
 }
