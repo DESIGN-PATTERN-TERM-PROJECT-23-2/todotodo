@@ -3,10 +3,7 @@
 <head>
     <title>Todolist for Day</title>
     <style>
-<<<<<<< HEAD
-<<<<<<< HEAD
         /* 여기는 기존의 CSS 스타일입니다. */
-=======
         .container {
             display: flex;
             flex-direction: column;
@@ -40,10 +37,7 @@
             display: block;
             margin: 0 auto;
         }
->>>>>>> fService
-=======
         /* 여기는 기존의 CSS 스타일입니다. */
->>>>>>> origin/fCreateTodoJH
     </style>
 </head>
 <body>
@@ -56,16 +50,11 @@
         <h1>Todolist for <span th:text="${date}"></span></h1>
     </div>
     <div class="bottom-section">
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> origin/fCreateTodoJH
         <div class="right">
             <ul th:each="category : ${categoryLists}">
                 <li>
                     <span th:text="${category.content}"></span>
                     <span>
-<<<<<<< HEAD
                     <form th:action="@{/todolist/create/{year}/{month}/{day}/{categoryId}(year=${tyear}, month=${tmonth}, day=${tday}, categoryId=${category.CategoryId})}" method="post">
                         <button type="submit">Add</button>
                     </form>
@@ -83,7 +72,6 @@
                                 <button class="addButton" th:data-nodeId="${element.NodeId}" th:data-categoryId="${category.CategoryId}">Add</button>
                             </form>
                             -->
-=======
         <div class="left">
             <ul th:each="category : ${categoryList}">
                 <li th:text="${category.content}">
@@ -92,8 +80,6 @@
                             <span th:text="${element.content}"></span>
                             <span th:text="${element.nodeId}"></span>
                             <span th:text="${element.todoListId}"></span>
->>>>>>> fService
-=======
                     <form th:action="@{/todolist/create/{year}/{month}/{day}/{nodeId}(year=${tyear}, month=${tmonth}, day=${tday}, nodeId=${category.NodeId})}" method="post">
                         <button type="submit">Add</button>
                     </form>
@@ -111,16 +97,11 @@
                                 <button class="addButton" th:data-nodeId="${element.NodeId}" th:data-categoryId="${category.CategoryId}">Add</button>
                             </form>
                             -->
->>>>>>> origin/fCreateTodoJH
                         </li>
                     </ul>
                 </li>
             </ul>
         </div>
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> origin/fCreateTodoJH
         <div class="left" id="calendarPlaceholder">
             <!-- 달력을 불러올 공간으로, JavaScript로 채워질 부분입니다. -->
         </div>
@@ -151,15 +132,10 @@
     });
 </script>
 -->
-<<<<<<< HEAD
-=======
         <div class="right">
             <img src="/images/Sample.png" alt="Image">
         </div>
     </div>
 </div>
->>>>>>> fService
-=======
->>>>>>> origin/fCreateTodoJH
 </body>
 </html>
