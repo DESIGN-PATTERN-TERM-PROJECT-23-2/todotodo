@@ -27,39 +27,36 @@ public class CategoryRepositoryHolub {
 
 
     public Long saveCategoryAndGetId(Category category) {
-        try {
-            Long nodeListId = IndexSingleton.getInstance().getNodeListIndex();
-            IndexSingleton.getInstance().setNodeListIndex(nodeListId+1);
-            String sql1 = "INSERT INTO node_lists (node_list_id, parent_id) VALUES ("+nodeListId+", NULL)";
-            NodeListSingleton.getInstance().getDatabase().execute(sql1);
-            System.out.println(NodeListSingleton.getNodeLists());
+
+        Long nodeListId = IndexSingleton.getInstance().getNodeListIndexAndAddOne();
+        // String sql1 = "INSERT INTO node_lists (node_list_id, parent_id) VALUES ("+nodeListId+", NULL)";
+        // NodeListSingleton.getInstance().getDatabase().execute(sql1);
+        NodeListSingleton.getInstance().getNodeLists().insert(new Object[]{String.valueOf(nodeListId), "NULL"});
+        System.out.println(NodeListSingleton.getNodeLists());
 
 
-            Long nodeId = IndexSingleton.getInstance().getNodeIndex();
-            IndexSingleton.getInstance().setNodeIndex(nodeId+1);
-            String sql2 = "INSERT INTO nodes (node_id, content, is_category, level, node_list_id) VALUES ("
-                    +nodeId+", "+category.getContent()+", 1, 0,"+nodeListId+  ")";
-            NodeSingleton.getInstance().getDatabase().execute(sql2);
+        Long nodeId = IndexSingleton.getInstance().getNodeIndexAndAddOne();
+//            String sql2 = "INSERT INTO nodes (node_id, content, is_category, level, node_list_id) VALUES ("
+//                    +nodeId+", "+category.getContent()+", 1, 0,"+nodeListId+  ")";
+//            NodeSingleton.getInstance().getDatabase().execute(sql2);
+        NodeSingleton.getInstance().getNodes().insert(new Object[]{String.valueOf(nodeId), category.getContent(), "1", "0", String.valueOf(nodeListId)});
+        System.out.println(NodeSingleton.getNodes());
 
-            System.out.println(NodeListSingleton.getInstance().getDatabase().execute("select * from nodes"));
+        Long categoryId = IndexSingleton.getInstance().getCategoryIndexAndAddOne();
+        IndexSingleton.getInstance().setCategoryIndex(categoryId+1);
+//            String sql3 = "INSERT INTO categories (category_id, content, node_id) VALUES ("
+//                    +categoryId+", "+category.getContent()+", "+nodeId+")";
+//            CategorySingleton.getInstance().getDatabase().execute(sql3);
+        CategorySingleton.getInstance().getCategories().insert(new Object[]{String.valueOf(categoryId), String.valueOf(nodeId), category.getContent()});
+        System.out.println(CategorySingleton.getCategories());
 
-            Long categoryId = IndexSingleton.getInstance().getCategoryIndex();
-            IndexSingleton.getInstance().setCategoryIndex(categoryId+1);
-            String sql3 = "INSERT INTO categories (category_id, content, node_id) VALUES ("
-                    +categoryId+", "+category.getContent()+", "+nodeId+")";
-            CategorySingleton.getInstance().getDatabase().execute(sql3);
+        // ********* table 에는 저장이 되는디 csv에선 저장이 안 됑
 
-            return nodeId;
-
-        } catch (IOException | ParseFailure e){
-            e.printStackTrace();
-        }
-
-
-        return 0L;
+        return nodeId;
     }
 
     public void removeCateogory(Long id) {
+        // ******* delete 어케함?
         try {
             String sql = "DELETE FROM categories WHERE node_id = ?";
             CategorySingleton.setCategories(CategorySingleton.getDatabase().execute(sql));

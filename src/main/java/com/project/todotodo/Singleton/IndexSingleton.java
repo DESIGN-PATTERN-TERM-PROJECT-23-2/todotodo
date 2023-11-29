@@ -24,6 +24,8 @@ public class IndexSingleton {
 
         private IndexSingleton() {}
 
+
+
     // setter하고 csv에도 저장하는 코드 필요함
     @Getter
     @Setter
@@ -90,4 +92,28 @@ public class IndexSingleton {
         }
         return;
     }
+
+
+    // csv 처리 필요 (edit이 없나?)
+    public static Long getNodeIndexAndAddOne() {
+        return nodeIndex++;
+    }
+
+    public static Long getNodeListIndexAndAddOne() {
+        return nodeListIndex++;
+    }
+
+    public static Long getTodoListIndexAndAddOne() {
+        return todoListIndex++;
+    }
+
+    public static Long getCategoryIndexAndAddOne() {
+        return categoryIndex++;
+    }
+
+    public static Long getNodeArrayListIndexAndAddOne() {
+        return nodeArrayListIndex++;
+    }
+
+
 }
