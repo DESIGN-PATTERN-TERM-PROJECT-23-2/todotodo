@@ -83,6 +83,6 @@ public class TodoListController {
                 + String.valueOf(todoForm.getYear())
                 +"/"+String.valueOf(month)  // 수정된 부분
                 +"/"+String.valueOf(day)    // 수정된 부분
-                +"/";
+                ;
     }
 }
