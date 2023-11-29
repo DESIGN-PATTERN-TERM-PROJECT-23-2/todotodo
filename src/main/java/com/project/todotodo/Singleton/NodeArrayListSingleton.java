@@ -1,4 +1,5 @@
 package com.project.todotodo.Singleton;
+
 import com.holub.database.CSVImporter;
 import com.holub.database.Database;
 import com.holub.database.Table;
@@ -12,23 +13,23 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 
-public class NodeListSingleton {
-    private static volatile NodeListSingleton instance;
+public class NodeArrayListSingleton {
+    private static volatile NodeArrayListSingleton instance;
 
-    private NodeListSingleton() {
+    private NodeArrayListSingleton() {
     }
 
     @Getter
     @Setter
-    private static Table nodeLists;
+    private static Table nodeArrayList;
     @Getter
     @Setter
     static Database database;
-    public static NodeListSingleton getInstance() {
+    public static NodeArrayListSingleton getInstance() {
         if (instance == null) {
             synchronized(IndexSingleton.class){
                 if (instance == null) {
-                    instance = new NodeListSingleton();
+                    instance = new NodeArrayListSingleton();
                     try {insertData();}
                     catch (IOException e){
                         e.printStackTrace();
@@ -42,14 +43,16 @@ public class NodeListSingleton {
     private static void insertData() throws IOException {
         try {
 
-            Reader in_category = new FileReader("node_lists.csv");
+            Reader in_category = new FileReader("node_array_list.csv");
             CSVImporter csvImporter = new CSVImporter(in_category);
-            nodeLists = TableFactory.create(csvImporter);
+            nodeArrayList = TableFactory.create(csvImporter);
 
             database = new Database(new File("."));
-            Table table = database.execute("select * from node_lists");
+            Table table = database.execute("select * from node_array_list");
         } catch (IOException | ParseFailure e){
             e.printStackTrace();
         }
     }
 }
+
+

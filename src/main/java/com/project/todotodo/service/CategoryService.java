@@ -49,11 +49,21 @@ public class CategoryService {
 
     public Long createCategory(String name) {
         // Parent id의 nodelist에
+//        Category category = new Category();
+//        category.setContent(name);
+//        category.setLevel(0);
+//        category.setNodeList(nodeListIterator.getRoot());
+//        Long categoryId = categoryRepositoryClass.saveCategoryAndGetId(category);
+//        category.setNodeId(categoryId);
+//        category.setCategoryId(categoryId);
+//        nodeListIterator.addToGivenParent(0L, category);
+//        return categoryId;
+
         Category category = new Category();
         category.setContent(name);
         category.setLevel(0);
         category.setNodeList(nodeListIterator.getRoot());
-        Long categoryId = categoryRepositoryClass.saveCategoryAndGetId(category);
+        Long categoryId = categoryRepositoryHolub.saveCategoryAndGetId(category);
         category.setNodeId(categoryId);
         category.setCategoryId(categoryId);
         nodeListIterator.addToGivenParent(0L, category);

@@ -5,7 +5,6 @@ import com.holub.database.Database;
 import com.holub.database.Table;
 import com.holub.database.TableFactory;
 import com.holub.text.ParseFailure;
-import com.project.todotodo.Singleton.CategoryIndexSingleton;
 
 import java.io.File;
 import java.io.FileReader;
