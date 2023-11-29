@@ -39,7 +39,7 @@ public class NodeListIterator implements Iterator {
     @Override
     public boolean hasNext() {
         ArrayList<Node> allList = getAllChildrenWithDFS(root.getCurr());
-        if(allList == null || !allList.contains(curr)){
+        if(allList == null){
             return false;
         }
         int currInx = allList.indexOf(curr);
@@ -63,7 +63,7 @@ public class NodeListIterator implements Iterator {
 
     public boolean hasPrevious(){
         ArrayList<Node> allList = getAllChildrenWithDFS(root.getCurr());
-        if(allList == null || !allList.contains(curr)){
+        if(allList == null){
             return false;
         }
         int currInx = allList.indexOf(curr);

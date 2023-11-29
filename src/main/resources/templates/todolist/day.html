@@ -3,14 +3,7 @@
 <head>
     <title>Todolist for Day</title>
     <style>
-        table {
-          border-collapse: collapse;
-        }
-        th, td {
-          border: 1px solid black;
-          padding: 8px;
-          text-align: center;
-        }
+        /* 여기는 기존의 CSS 스타일입니다. */
     </style>
 </head>
 <body>
@@ -27,115 +20,58 @@
             <ul th:each="category : ${categoryLists}">
                 <li>
                     <span th:text="${category.content}"></span>
+                    <span>
+                    <form th:action="@{/todolist/create/{year}/{month}/{day}/{nodeId}(year=${tyear}, month=${tmonth}, day=${tday}, nodeId=${category.NodeId})}" method="post">
+                        <button type="submit">Add</button>
+                    </form>
+                    </span>
                     <ul>
                         <li th:each="element : ${category.todoListElementList}">
                             <span th:text="${element.content}"></span>
-                            <span th:text="${element.nodeId}"></span>
-                            <span th:text="${element.todoListId}"></span>
-                            <button class="addButton" th:data-nodeId="${element.nodeId}" th:data-categoryId="${category.categoryId}">Add</button>
+                            <span th:text="${element.NodeId}"></span>
+                            <span th:text="${element.TodoListId}"></span>
+                            <form th:action="@{/todolist/create/{year}/{month}/{day}/{nodeId}(year=${tyear}, month=${tmonth}, day=${tday}, nodeId=${element.nodeId})}" method="post">
+                                <button type="submit">Addthat</button>
+                            </form>
+                            <!--
+                            <form th:action="@{/todolist/create/{year}/{month}/{day}/{nodeId}(nodeId=${element.nodeId})}" method="post">
+                                <button class="addButton" th:data-nodeId="${element.NodeId}" th:data-categoryId="${category.CategoryId}">Add</button>
+                            </form>
+                            -->
                         </li>
                     </ul>
                 </li>
             </ul>
         </div>
         <div class="left" id="calendarPlaceholder">
-            <table>
-                <thead>
-                <tr>
-                    <th>일</th>
-                    <th>월</th>
-                    <th>화</th>
-                    <th>수</th>
-                    <th>목</th>
-                    <th>금</th>
-                    <th>토</th>
-                </tr>
-                </thead>
-                <tbody id="calendar-body">
-
-                </tbody>
-            </table>
-
             <!-- 달력을 불러올 공간으로, JavaScript로 채워질 부분입니다. -->
         </div>
     </div>
 </div>
-<!--<script>-->
-<!--    // 버튼 클릭 시 서버로 데이터 전송-->
-<!--    document.querySelectorAll('.addButton').forEach(button => {-->
-<!--        button.addEventListener('click', function() {-->
-<!--            const nodeId = this.getAttribute('data-nodeId');-->
-<!--            const categoryId = this.getAttribute('data-categoryId');-->
-<!--            // Ajax를 사용하여 서버로 데이터 전송-->
-<!--            const xhr = new XMLHttpRequest();-->
-<!--            xhr.open('POST', '/your-endpoint-url'); // 여기에 실제 엔드포인트 URL을 넣어주세요-->
-<!--            xhr.setRequestHeader('Content-Type', 'application/json');-->
-<!--            xhr.onload = function() {-->
-<!--                if (xhr.status === 200) {-->
-<!--                    console.log('Data sent successfully');-->
-<!--                    // 여기서 추가 작업을 수행할 수 있습니다.-->
-<!--                } else {-->
-<!--                    console.error('Data sending failed');-->
-<!--                }-->
-<!--            };-->
-<!--            const data = JSON.stringify({ nodeId, categoryId });-->
-<!--            xhr.send(data);-->
-<!--        });-->
-<!--    });-->
-<!--</script>-->
-
-
+<!--
 <script>
-    function createCalendar(year, month) {
-      const calendarBody = document.getElementById('calendar-body');
-      calendarBody.innerHTML = '';
-
-      const date = new Date(year, month - 1, 1);
-      const lastDay = new Date(year, month, 0).getDate();
-      const firstDayIndex = date.getDay();
-
-      let day = 1;
-      for (let i = 0; i < 6; i++) {
-        const row = document.createElement('tr');
-        for (let j = 0; j < 7; j++) {
-          if (i === 0 && j < firstDayIndex) {
-            const cell = document.createElement('td');
-            row.appendChild(cell);
-          } else if (day > lastDay) {
-            break;
-          } else {
-            const cell = document.createElement('td');
-            cell.textContent = day;
-
-            const url = `/todolist/${year}/${month}/${day}`;
-            cell.addEventListener('click', () => {
-              window.location.href = url;
-            });
-
-            row.appendChild(cell);
-            day++;
-          }
-        }
-        calendarBody.appendChild(row);
-      }
-    }
-
-    const urlParams = new URLSearchParams(window.location.search);
-    const _year = urlParams.get('year');
-    const _month = urlParams.get('month');
-    const _day = urlParams.get('day');
-
-    const date = new Date(_year, _month - 1, _day); // month는 0부터 시작하므로 1을 빼줍니다.
-    const fullYear = date.getFullYear();
-    const fullMonth = date.getMonth() + 1;
-    const fullDate = date.getDate();
-
-    // 예시로 현재 날짜 기준으로 달력 생성
-    const currentDate = new Date();
-    const currentYear = currentDate.getFullYear();
-    const currentMonth = currentDate.getMonth() + 1;
-
-    createCalendar(fullYear, fullMonth);
+    // 버튼 클릭 시 서버로 데이터 전송
+    document.querySelectorAll('.addButton').forEach(button => {
+        button.addEventListener('click', function() {
+            const nodeId = this.getAttribute('data-nodeId');
+            const categoryId = this.getAttribute('data-categoryId');
+            // Ajax를 사용하여 서버로 데이터 전송
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', '/your-endpoint-url'); // 여기에 실제 엔드포인트 URL을 넣어주세요
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    console.log('Data sent successfully');
+                    // 여기서 추가 작업을 수행할 수 있습니다.
+                } else {
+                    console.error('Data sending failed');
+                }
+            };
+            const data = JSON.stringify({ nodeId, categoryId });
+            xhr.send(data);
+        });
+    });
 </script>
+-->
 </body>
 </html>

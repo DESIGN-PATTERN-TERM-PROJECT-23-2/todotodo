@@ -62,11 +62,16 @@ public class TodoListService {
     public Long createTodoList(Long parent_id, String content, LocalDateTime time){
         ToDoList todo = new ToDoList();
         Node parent = nodeListIterator.findNodeInRoot(parent_id);
+        if(parent == null){
+            System.out.println("TodoListService.java: createTodoList():: no such parent");
+            return 0L;
+        }
         todo.setParent(parent);
         todo.setComplete(false);
         todo.setDate(time);
         todo.setLevel(parent.getLevel()+1);
         todo.setNodeList(parent);
+        todo.setContent(content);
 
         /*
         Long node_id = todoListRepositoryClass.create(parent, todo);
@@ -75,6 +80,10 @@ public class TodoListService {
 
         // node_id, todo_list_id
         ArrayList<Long> ids = todoListRepositoryClass.create(parent, todo);
+        if(ids == null || ids.size() != 2){
+            System.out.println("failed to save in todoList DB");
+            return 0L;
+        }
         Long node_id = ids.get(0);
         Long todo_list_id = ids.get(1);
         todo.setNodeId(node_id);
