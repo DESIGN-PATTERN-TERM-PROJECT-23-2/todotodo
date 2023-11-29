@@ -24,15 +24,21 @@ public class IndexSingleton {
 
         private IndexSingleton() {}
 
+    // setter하고 csv에도 저장하는 코드 필요함
     @Getter
+    @Setter
     private static Long nodeIndex;
         @Getter
+        @Setter
         private static Long nodeListIndex;
         @Getter
+        @Setter
         private static Long todoListIndex;
         @Getter
+        @Setter
         private static Long categoryIndex;
         @Getter
+        @Setter
         private static Long nodeArrayListIndex;
 
         private static Table keys;
