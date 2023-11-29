@@ -4,15 +4,14 @@ import com.project.todotodo.dto.Goal.CategoryListElement;
 
 import com.project.todotodo.model.Category;
 import com.project.todotodo.model.Node;
-import com.project.todotodo.model.NodeList;
 import com.project.todotodo.model.NodeListIterator;
 import com.project.todotodo.repository.CategoryRepository;
 import com.project.todotodo.repository.CategoryRepositoryClass;
+import com.project.todotodo.repository.CategoryRepositoryHolub;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ListIterator;
 
 @Service
 public class CategoryService {
@@ -23,13 +22,16 @@ public class CategoryService {
     private final TodoListService todoListService;
     private NodeListIterator nodeListIterator;
 
+    private final CategoryRepositoryHolub categoryRepositoryHolub;
+
     private final CategoryRepositoryClass categoryRepositoryClass;
 
-    public CategoryService(CategoryRepository categoryRepository, NodeListService nodeListService, TodoListService todoListService, CategoryRepositoryClass categoryRepositoryClass) {
+    public CategoryService(CategoryRepository categoryRepository, NodeListService nodeListService, TodoListService todoListService, CategoryRepositoryHolub categoryRepositoryHolub, CategoryRepositoryClass categoryRepositoryClass) {
         this.categoryRepository = categoryRepository;
         this.nodeListService = nodeListService;
         this.nodeListIterator = nodeListService.getIterator();
         this.todoListService = todoListService;
+        this.categoryRepositoryHolub = categoryRepositoryHolub;
         this.categoryRepositoryClass = categoryRepositoryClass;
     }
 

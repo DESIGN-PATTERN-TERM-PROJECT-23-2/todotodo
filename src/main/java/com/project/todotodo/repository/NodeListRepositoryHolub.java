@@ -13,8 +13,7 @@ import java.io.IOException;
 import java.io.Reader;
 
 public class NodeListRepositoryHolub {
-    Table name;
-    Table address;
+    Table nodeList;
     Database database;
 
     public NodeListRepositoryHolub() {
@@ -31,13 +30,11 @@ public class NodeListRepositoryHolub {
 
             Reader in_name = new FileReader("node_lists.csv");
             CSVImporter csvImporter = new CSVImporter(in_name);
-            name = TableFactory.create(csvImporter);
+            nodeList = TableFactory.create(csvImporter);
 
             database = new Database(new File("."));
             Table table = database.execute("select * from node_lists");
-            Long nextIdx = 2L + 1L;
-            // 수정
-            CategoryIndexSingleton.getInstance().setIndex(nextIdx);
+
         } catch (IOException | ParseFailure e) {
             e.printStackTrace();
         }

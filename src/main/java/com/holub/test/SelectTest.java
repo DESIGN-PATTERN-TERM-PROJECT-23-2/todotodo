@@ -43,7 +43,9 @@ public class SelectTest {
 
         String string_expected = expectedTable.toString();
 
-       String string_join_table = join_table.toString();
+        String string_join_table = join_table.toString();
+        System.out.println("-------------");
+        System.out.println(expectedTable.toString());
 
         Assertions.assertEquals(string_expected, string_join_table);
     }

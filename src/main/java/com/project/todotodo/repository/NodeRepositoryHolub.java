@@ -5,18 +5,17 @@ import com.holub.database.Database;
 import com.holub.database.Table;
 import com.holub.database.TableFactory;
 import com.holub.text.ParseFailure;
-import com.project.todotodo.Singleton.CategoryIndexSingleton;
 
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 
-public class TodoListRepositoryHolub {
-    Table todoList;
+public class NodeRepositoryHolub {
+    Table node;
     Database database;
 
-    public TodoListRepositoryHolub() {
+    public NodeRepositoryHolub() {
         try {
             insertData();
         } catch (IOException e) {
@@ -28,15 +27,26 @@ public class TodoListRepositoryHolub {
     private void insertData() throws IOException {
         try {
 
-            Reader in_name = new FileReader("todo_lists.csv");
+            Reader in_name = new FileReader("nodes.csv");
             CSVImporter csvImporter = new CSVImporter(in_name);
-            todoList = TableFactory.create(csvImporter);
+            node = TableFactory.create(csvImporter);
 
             database = new Database(new File("."));
-            Table table = database.execute("select * from todo_lists");
+            Table table = database.execute("select * from nodes");
+
+        } catch (IOException | ParseFailure e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void removeNodeByNodeId(Long id) {
+        try {
+            String sql2 = "DELETE FROM nodes WHERE node_id = ?";
+            node = database.execute(sql2);
 
         } catch (IOException | ParseFailure e){
             e.printStackTrace();
         }
+        return;
     }
 }

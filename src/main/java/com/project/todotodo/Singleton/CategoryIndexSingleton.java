@@ -29,4 +29,6 @@ public class CategoryIndexSingleton {
         this.index = idx;
         return;
     }
+
+
 }
