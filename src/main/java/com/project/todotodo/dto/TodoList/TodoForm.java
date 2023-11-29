@@ -8,9 +8,9 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class TodoForm {
-    private Long ParentId;
+    private String ParentId;
     private String content;
-    private int year;
-    private int month;
-    private int day;
+    private String year;
+    private String month;
+    private String day;
 }

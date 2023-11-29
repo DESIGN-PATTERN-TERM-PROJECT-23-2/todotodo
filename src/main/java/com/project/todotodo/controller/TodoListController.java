@@ -32,12 +32,13 @@ public class TodoListController {
 
     @GetMapping("/{year}/{month}/{day}")
     public String getTasksByDate(
-            @PathVariable Long year,
-            @PathVariable Long month,
-            @PathVariable Long day,
+            @PathVariable int year,
+            @PathVariable int month,
+            @PathVariable int day,
             Model model) {
 
-        LocalDate date = LocalDate.of(year.intValue(), month.intValue(), day.intValue());
+        //LocalDate date = LocalDate.of(year.intValue(), month.intValue(), day.intValue());
+        LocalDate date = LocalDate.of(year, month, day);
         List<CategoryList> categoryLists = nodeListService.getCategoryListByDate(date);
         model.addAttribute("date", date);
         model.addAttribute("categoryLists", categoryLists);
@@ -50,29 +51,33 @@ public class TodoListController {
 
     @PostMapping("/create/{year}/{month}/{day}/{nodeId}")
     public String createTodo(
-            @PathVariable Long year,
-            @PathVariable Long month,
-            @PathVariable Long day,
+            @PathVariable int year,
+            @PathVariable int month,
+            @PathVariable int day,
             @PathVariable Long nodeId,
             Model model){
-        model.addAttribute("year", year);
-        model.addAttribute("month", month);
-        model.addAttribute("day", day);
-        model.addAttribute("parentId", nodeId);
+        model.addAttribute("year", String.valueOf(year));
+        model.addAttribute("month", String.valueOf(month));
+        model.addAttribute("day", String.valueOf(day));
+        model.addAttribute("parentId", String.valueOf(nodeId));
         return "todolist/create";  // HTML 템플릿의 이름 (create.html)
     }
 
     @PostMapping("/create")
     public String create(TodoForm todoForm){
         // 월 값 확인 및 조정
-        int month = Math.max(1, Math.min(12, todoForm.getMonth()));
+        //int month = Math.max(1, Math.min(12, todoForm.getMonth()));
         // 일 값 확인 및 조정
-        int day = Math.max(1, Math.min(31, todoForm.getDay()));
+        //int day = Math.max(1, Math.min(31, todoForm.getDay()));
+        Long parentId = Long.valueOf(todoForm.getParentId());
+        int year = Integer.parseInt(todoForm.getYear());
+        int month = Integer.parseInt(todoForm.getMonth());
+        int day = Integer.parseInt(todoForm.getDay());
 
         LocalDateTime dateTime = LocalDateTime.of(
-                todoForm.getYear(), month, day,
+                year, month, day,
                 0, 0, 0);
-        todoListService.createTodoList(todoForm.getParentId(), todoForm.getContent(), dateTime);
+        todoListService.createTodoList(parentId, todoForm.getContent(), dateTime);
         System.out.println(todoForm.getContent());
         return "redirect:/todolist/"
                 + String.valueOf(todoForm.getYear())

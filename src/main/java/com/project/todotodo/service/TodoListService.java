@@ -62,6 +62,10 @@ public class TodoListService {
     public Long createTodoList(Long parent_id, String content, LocalDateTime time){
         ToDoList todo = new ToDoList();
         Node parent = nodeListIterator.findNodeInRoot(parent_id);
+        if(parent == null){
+            System.out.println("TodoListService.java: createTodoList():: no such parent");
+            return 0L;
+        }
         todo.setParent(parent);
         todo.setComplete(false);
         todo.setDate(time);

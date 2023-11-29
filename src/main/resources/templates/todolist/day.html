@@ -30,7 +30,7 @@
                             <span th:text="${element.content}"></span>
                             <span th:text="${element.NodeId}"></span>
                             <span th:text="${element.TodoListId}"></span>
-                            <form th:action="@{/todolist/create/{year}(year=${tyear})/{month}(month=${tmonth})/{day}(day=${tday})/{nodeId}(nodeId=${element.nodeId})}" method="post">
+                            <form th:action="@{/todolist/create/{year}/{month}/{day}/{nodeId}(year=${tyear}, month=${tmonth}, day=${tday}, nodeId=${element.nodeId})}" method="post">
                                 <button type="submit">Addthat</button>
                             </form>
                             <!--

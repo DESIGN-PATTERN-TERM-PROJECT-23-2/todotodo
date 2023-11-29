@@ -6,6 +6,10 @@
     <div class="form-group">
       <label for="content">이름</label>
       <input type="text" id="content" name="content" placeholder="할 일을 입력하세요">
+      <input type="hidden" id="ParentId" name="ParentId" th:value="${parentId}">
+      <input type="hidden" id="year" name="year" th:value="${year}">
+      <input type="hidden" id="month" name="month" th:value="${month}">
+      <input type="hidden" id="day" name="day" th:value="${day}">
     </div>
     <button type="submit">등록</button>
   </form>
