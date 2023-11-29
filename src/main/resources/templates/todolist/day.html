@@ -21,7 +21,7 @@
                 <li>
                     <span th:text="${category.content}"></span>
                     <span>
-                    <form th:action="@{/todolist/create/{year}/{month}/{day}/{categoryId}(year=${tyear}, month=${tmonth}, day=${tday}, categoryId=${category.CategoryId})}" method="post">
+                    <form th:action="@{/todolist/create/{year}/{month}/{day}/{nodeId}(year=${tyear}, month=${tmonth}, day=${tday}, nodeId=${category.NodeId})}" method="post">
                         <button type="submit">Add</button>
                     </form>
                     </span>

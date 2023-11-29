@@ -79,6 +79,10 @@ public class TodoListService {
 
         // node_id, todo_list_id
         ArrayList<Long> ids = todoListRepositoryClass.create(parent, todo);
+        if(ids == null || ids.size() != 2){
+            System.out.println("failed to save in todoList DB");
+            return 0L;
+        }
         Long node_id = ids.get(0);
         Long todo_list_id = ids.get(1);
         todo.setNodeId(node_id);
