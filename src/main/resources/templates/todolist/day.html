@@ -21,9 +21,9 @@
                 <li>
                     <span th:text="${category.content}"></span>
                     <span>
-                        <form th:action="@{/todolist/create/${tyear}/${tmonth}/${tday}/${category.CategoryId}}" method="post">
-                            <button class="addTodoList">Add</button>
-                        </form>
+                    <form th:action="@{/todolist/create/{year}/{month}/{day}/{categoryId}(year=${tyear}, month=${tmonth}, day=${tday}, categoryId=${category.CategoryId})}" method="post">
+                        <button type="submit">Add</button>
+                    </form>
                     </span>
                     <ul>
                         <li th:each="element : ${category.todoListElementList}">
@@ -31,7 +31,7 @@
                             <span th:text="${element.NodeId}"></span>
                             <span th:text="${element.TodoListId}"></span>
                             <form th:action="@{/todolist/create/{year}(year=${tyear})/{month}(month=${tmonth})/{day}(day=${tday})/{nodeId}(nodeId=${element.nodeId})}" method="post">
-                                <button class="addTodoList">Add</button>
+                                <button type="submit">Addthat</button>
                             </form>
                             <!--
                             <form th:action="@{/todolist/create/{year}/{month}/{day}/{nodeId}(nodeId=${element.nodeId})}" method="post">
