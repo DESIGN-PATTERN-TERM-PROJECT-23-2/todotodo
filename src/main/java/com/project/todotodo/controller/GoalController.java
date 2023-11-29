@@ -1,3 +1,4 @@
+
 package com.project.todotodo.controller;
 
 import com.project.todotodo.dto.Goal.CategoryListElement;
@@ -28,8 +29,7 @@ public class GoalController {
 
     @PostMapping("/create")
     public String create(GoalForm goalForm){
-        Category category = new Category();
-        // goal form으로 category 저장하는 코드
+        categoryService.createCategory(goalForm.getName());
         System.out.println(goalForm.getName());
         return "redirect:/";
     }
@@ -44,7 +44,7 @@ public class GoalController {
     @PostMapping("/delete/{id}")
     public String deleteCategory(@PathVariable Long id) {
         categoryService.deleteCategoryById(id);
-        return "redirect:/goal/list"; // 삭제 후 카테고리 목록으로 리다이렉트
+        return "redirect:/goal/list";
     }
 
 

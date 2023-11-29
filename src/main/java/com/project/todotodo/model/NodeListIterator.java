@@ -1,7 +1,10 @@
 package com.project.todotodo.model;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Queue;
 
 public class NodeListIterator implements Iterator {
@@ -13,6 +16,9 @@ public class NodeListIterator implements Iterator {
         this.curr = curr;
     }
 
+    public Node getRoot(){
+        return root.getCurr();
+    }
     public void setCurr(Node curr) {
         this.curr = curr;
     }
@@ -196,13 +202,21 @@ public class NodeListIterator implements Iterator {
     public boolean remove(Long nodeId){
         try {
             Node target = findNodeInRoot(nodeId);
+            Node savedCurr = curr;
+            curr = target;
+            ArrayList<Node> siblings = getSibling();
+            siblings.remove(target);
+            curr = savedCurr;
+/*
             NodeListIterator targetNodeListIterator = target.getNodeList().getNodeListIterator();
             NodeList parentNodeList = targetNodeListIterator.getParent().getNodeList();
             ArrayList<Node> targetArrayList = targetNodeListIterator.getSibling();
             targetArrayList.remove(target);
             parentNodeList.setChildren(targetArrayList);
+*/
             return true;
         } catch(Exception e) {
+            System.out.println("remove failed!!!!!!!!!!!------------");
             return false;
         }
     }
@@ -215,6 +229,16 @@ public class NodeListIterator implements Iterator {
 
     // dfs
     public ArrayList<Node> getAllChildrenWithDFS(Node target){
+        ArrayList<Node> allChildren = getAllTreeWithDFS(target);
+        if(allChildren == null){
+            return null;
+        }
+        allChildren.remove(0);
+        return allChildren;
+    }
+
+    public ArrayList<Node> getAllTreeWithDFS(Node target){
+        if(target == null) {return null;}
         ArrayList<Node> allChildren = new ArrayList<>();
         ArrayList<Node> needVisit = new ArrayList<>();
         needVisit.add(target);
@@ -235,6 +259,16 @@ public class NodeListIterator implements Iterator {
 
     // bfs
     public ArrayList<Node> getAllChildrenWithBFS(Node target){
+        ArrayList<Node> all = getAllTreeWithBFS(target);
+        if(all == null){
+            return null;
+        }
+        all.remove(0);
+        return all;
+    }
+
+    public ArrayList<Node> getAllTreeWithBFS(Node target){
+        if(target == null) {return null;}
         ArrayList<Node> allChildren = new ArrayList<>();
         ArrayList<Node> needVisit = new ArrayList<>();
         needVisit.add(target);
@@ -255,32 +289,50 @@ public class NodeListIterator implements Iterator {
 
 
     // if returns -1:  error
-    public int getIndexAmongChildren(Node target){
-        NodeList targetNodeList = target.getNodeList();
+    public Long getIndexAmongChildren(Node target){
+        // if target Node does not exists
+        if(findNodeInRoot(target.getNodeId()) == null){
+            return -1L;
+        }
+
+        Node savedCurr = curr;
+        curr = target;
+        ArrayList<Node> siblings = getSibling();
+        if(siblings == null || siblings.size() == 0){
+            return -1L;
+        }
+        int inx = siblings.indexOf(target);
+        Long index = Long.valueOf(inx);
+
+        /*NodeList targetNodeList = target.getNodeList();
         if(targetNodeList.getNodeListIterator().hasPrevious()){
             NodeList parentNodeList = targetNodeList.getParent().getNodeList();
             ArrayList<Node> siblings = parentNodeList.getChildren();
-            int index = siblings.indexOf(target);
+            Long index = Long.valueOf(siblings.indexOf(target));
             return index;
         }
-        System.out.println("getIndexAmongChildren():: Error occurred");
-        return -1;
+        System.out.println("getIndexAmongChildren():: Error occurred");*/
+        curr = savedCurr;
+        return index;
     }
 
     public Node findNodeInRoot(Long targetId){
         ArrayList<Node> needVisit = new ArrayList<Node>();
         needVisit.add(root.getCurr());
-        Node curr;
+        Node savedCurr = curr;
         while(needVisit.size() > 0){
             curr = needVisit.get(needVisit.size()-1);
             needVisit.remove(needVisit.size()-1);
             if(curr.getNodeId() == targetId){
-                return curr;
+                Node ret = curr;
+                curr = savedCurr;
+                return ret;
             }
             if(this.hasChildren()){
                 needVisit.addAll(this.getChildren());
             }
         }
+        curr = savedCurr;
         return null;
     }
 
@@ -295,6 +347,42 @@ public class NodeListIterator implements Iterator {
             return false;
         }
     }
+
+    public void printAllWithDFS(){
+        ArrayList<Node> all = getAllTreeWithDFS(getRoot());
+        System.out.println("DFS print all -----------------------");
+        for(Node node: all){
+            System.out.println(node.getNodeId());
+        }
+    }
+
+    public void printAllWithBFS(){
+        ArrayList<Node> all = getAllTreeWithBFS(getRoot());
+        System.out.println("BFS print all -----------------------");
+        for(Node node: all){
+            System.out.println(node.getNodeId());
+        }
+    }
+
+    public List<ToDoList> getTodoListByCategoryDate(Long nodeIdOfCategory, LocalDate targetDate){
+        List<ToDoList> toDoLists = new ArrayList<>();
+        Node root = getRoot();
+        Node category = findNodeInRoot(nodeIdOfCategory);
+        if(category == null || category.getLevel() != 0){
+            System.out.println("NodeListIterator.java: getDooListByCategoryDate:: id no matched with categories");
+            return null;
+        }
+        ArrayList<Node> all = getAllChildrenWithDFS(category);
+        for(Node node: all){
+            ToDoList toDoList = (ToDoList) node;
+            LocalDate toDoListDate = toDoList.getDate().toLocalDate();
+            if(toDoListDate.isEqual(targetDate)){
+                toDoLists.add(toDoList);
+            }
+        }
+        return toDoLists;
+    }
+
 
     /*public int findLevel(Node node){
         return node.getLevel();
