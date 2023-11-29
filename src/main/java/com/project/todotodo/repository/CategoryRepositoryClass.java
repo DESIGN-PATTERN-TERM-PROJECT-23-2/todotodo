@@ -59,6 +59,4 @@ public class CategoryRepositoryClass {
         String sql2 = "DELETE FROM nodes WHERE node_id = ?";
         jdbcTemplate.update(sql2, id);
     }
-
-
 }

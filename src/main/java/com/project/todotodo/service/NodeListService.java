@@ -90,5 +90,4 @@ public class NodeListService {
         }
         return todolistDtoList;
     }
-
 }

@@ -17,7 +17,7 @@ public class TodoListRepositoryClass {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public void removeTodolist(Node toDoList){
+    public void removeTodolist(Node toDoList) {
 
         // 1. todolist 지우기
         // 2. nodeId로 node 지우기
@@ -41,7 +41,7 @@ public class TodoListRepositoryClass {
         jdbcTemplate.update(sql5, toDoList.getNodeId());
     }
 
-    public ArrayList<Long> create(Node parent, ToDoList toDoList){
+    public ArrayList<Long> create(Node parent, ToDoList toDoList) {
         ArrayList<Long> ids = new ArrayList<>(); // node_id, todo_list_id
         // 0. nodelist 만들기
         // 1. Node를 만들기 (nodelistid
@@ -54,5 +54,4 @@ public class TodoListRepositoryClass {
 
         return ids;
     }
-
 }
