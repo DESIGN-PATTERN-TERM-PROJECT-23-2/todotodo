@@ -73,6 +73,7 @@ public class TodoListRepositoryClass {
         KeyHolder keyHolder1 = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql2, Statement.RETURN_GENERATED_KEYS);
+            // String 아니고 다른 건가봄
             ps.setString(1, toDoList.getContent());
             ps.setInt(2, 0);
             ps.setInt(3, toDoList.getLevel());

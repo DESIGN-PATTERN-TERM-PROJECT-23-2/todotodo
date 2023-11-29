@@ -71,6 +71,7 @@ public class TodoListService {
         todo.setDate(time);
         todo.setLevel(parent.getLevel()+1);
         todo.setNodeList(parent);
+        todo.setContent(content);
 
         /*
         Long node_id = todoListRepositoryClass.create(parent, todo);
