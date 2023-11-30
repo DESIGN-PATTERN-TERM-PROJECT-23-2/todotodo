@@ -5,6 +5,7 @@ import com.holub.database.Database;
 import com.holub.database.Table;
 import com.holub.database.TableFactory;
 import com.holub.text.ParseFailure;
+import com.project.todotodo.Singleton.DatagBaseSingleton;
 import com.project.todotodo.model.Node;
 import com.project.todotodo.model.ToDoList;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,11 @@ public class NodeListRepositoryHolub implements NodeListRepositoryInterface {
     @Autowired
     public NodeListRepositoryHolub() {}
 
-    public ArrayList<Node> findCategories(Node root) {
+    public ArrayList<Node> findCategories(Node root) throws IOException, ParseFailure {
+        Table table = DatagBaseSingleton.getInstance().getDatabase().execute("SELECT * FROM nodes, categories WHERE nodes.node_id = categories.node_id AND nodes.level = 0;");
+
+
+
         return null;
     }
 

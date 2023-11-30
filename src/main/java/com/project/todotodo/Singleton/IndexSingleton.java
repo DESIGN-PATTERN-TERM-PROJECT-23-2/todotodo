@@ -112,7 +112,7 @@ public class IndexSingleton {
     }
 
     public static Long getNodeArrayListIndexAndAddOne() {
-        return nodeArrayListIndex++;
+            return nodeArrayListIndex++;
     }
 
 

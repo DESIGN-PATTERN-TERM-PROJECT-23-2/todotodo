@@ -60,17 +60,7 @@ public class CategoryRepositoryHolub implements CategoryRepositoryInterface{
     }
 
     public void removeCateogory(Long id) {
-//        // ******* delete 어케함?
-//        try {
-//            String sql = "DELETE FROM categories WHERE node_id = ?";
-//            CategorySingleton.setCategories(DatagBaseSingleton.getDatabase().execute(sql));
-//            String sql2 = "DELETE FROM nodes WHERE node_id = ?";
-//            NodeSingleton.setNodes(DatagBaseSingleton.getDatabase().execute(sql2));
-//
-//        } catch (IOException | ParseFailure e){
-//            e.printStackTrace();
-//        }
-//        return;
+        // 추후 구현
     }
 
 }
