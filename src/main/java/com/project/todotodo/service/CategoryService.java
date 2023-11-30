@@ -8,6 +8,7 @@ import com.project.todotodo.model.NodeListIterator;
 import com.project.todotodo.repository.CategoryRepository;
 import com.project.todotodo.repository.CategoryRepositoryClass;
 import com.project.todotodo.repository.CategoryRepositoryHolub;
+import com.project.todotodo.repository.CategoryRepositoryInterface;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -22,11 +23,11 @@ public class CategoryService {
     private final TodoListService todoListService;
     private NodeListIterator nodeListIterator;
 
-    private final CategoryRepositoryHolub categoryRepositoryHolub;
+    private final CategoryRepositoryInterface categoryRepositoryHolub;
 
-    private final CategoryRepositoryClass categoryRepositoryClass;
+    private final CategoryRepositoryInterface categoryRepositoryClass;
 
-    public CategoryService(CategoryRepository categoryRepository, NodeListService nodeListService, TodoListService todoListService, CategoryRepositoryHolub categoryRepositoryHolub, CategoryRepositoryClass categoryRepositoryClass) {
+    public CategoryService(CategoryRepository categoryRepository, NodeListService nodeListService, TodoListService todoListService, CategoryRepositoryInterface categoryRepositoryHolub, CategoryRepositoryInterface categoryRepositoryClass) {
         this.categoryRepository = categoryRepository;
         this.nodeListService = nodeListService;
         this.nodeListIterator = nodeListService.getIterator();

@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class NodeListRepositoryHolub {
+public class NodeListRepositoryHolub implements NodeListRepositoryInterface {
     @Autowired
     public NodeListRepositoryHolub() {}
 
@@ -27,7 +27,13 @@ public class NodeListRepositoryHolub {
     }
 
     public ArrayList<Node> findByParentId(Long id, Node parent) {
-        return null;
+        List<Long> nodeIdList = getNodeIdsByParentId(id);
+        ArrayList nodes = new ArrayList<Node>();
+        for (Long element : nodeIdList){
+            ToDoList todo = getTodoListById(element, parent);
+            nodes.add(todo);
+        }
+        return nodes;
     }
 
     public List<Long> getNodeIdsByParentId(Long parentId) {

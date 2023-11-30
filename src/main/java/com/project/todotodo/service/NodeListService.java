@@ -5,6 +5,7 @@ import com.project.todotodo.dto.TodoList.TodoListElement;
 import com.project.todotodo.model.*;
 import com.project.todotodo.repository.NodeListRepository;
 import com.project.todotodo.repository.NodeListRepositoryClass;
+import com.project.todotodo.repository.NodeListRepositoryInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,9 +19,9 @@ public class NodeListService {
     private NodeList nodeList;
     private NodeListIterator nodeListIterator;
 
-    private final NodeListRepositoryClass nodeListRepositoryClass;
+    private final NodeListRepositoryInterface nodeListRepositoryClass;
     @Autowired
-    public NodeListService(NodeListRepository nodeListRepository, NodeListRepositoryClass nodeListRepositoryClass) {
+    public NodeListService(NodeListRepository nodeListRepository, NodeListRepositoryInterface nodeListRepositoryClass) {
         this.nodeListRepository = nodeListRepository;
         this.nodeListRepositoryClass = nodeListRepositoryClass;
         this.nodeList = initNodeList();

@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 @Repository
-public class TodoListRepositoryHolub {
+public class TodoListRepositoryHolub implements  TodoListRepositoryInterface{
     @Autowired
     public TodoListRepositoryHolub() {}
 

@@ -5,6 +5,7 @@ import com.project.todotodo.dto.TodoList.TodoListElement;
 import com.project.todotodo.model.*;
 import com.project.todotodo.repository.TodoListRepository;
 import com.project.todotodo.repository.TodoListRepositoryClass;
+import com.project.todotodo.repository.TodoListRepositoryInterface;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -19,11 +20,11 @@ public class TodoListService {
     private final NodeListService nodeListService;
     private NodeListIterator nodeListIterator;
 
-    private final TodoListRepositoryClass todoListRepositoryClass;
+    private final TodoListRepositoryInterface todoListRepositoryClass;
 
 
 
-    public TodoListService(TodoListRepository todoListRepository, NodeListService nodeListService, TodoListRepositoryClass todoListRepositoryClass) {
+    public TodoListService(TodoListRepository todoListRepository, NodeListService nodeListService, TodoListRepositoryInterface todoListRepositoryClass) {
         this.todoListRepository = todoListRepository;
         this.nodeListService = nodeListService;
         this.nodeListIterator = nodeListService.getIterator();

@@ -18,7 +18,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 @Repository
-public class CategoryRepositoryHolub {
+public class CategoryRepositoryHolub implements CategoryRepositoryInterface{
 
     @Autowired
     public CategoryRepositoryHolub() {

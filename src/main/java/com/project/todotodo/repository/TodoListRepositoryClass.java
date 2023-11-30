@@ -19,7 +19,7 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 
 @Repository
-public class TodoListRepositoryClass {
+public class TodoListRepositoryClass implements TodoListRepositoryInterface{
     private final JdbcTemplate jdbcTemplate;
 
     @Autowired
