@@ -46,7 +46,7 @@ public class TodoListRepositoryHolub {
         System.out.println(TodoListSingleton.getTodoLists());
 
         Long nodeArrayListId = IndexSingleton.getInstance().getNodeArrayListIndexAndAddOne();
-        NodeArrayListSingleton.getInstance().getNodeArrayList().insert(new Object[]{String.valueOf(nodeArrayListId), String.valueOf(parent.getNodeId()), String.valueOf(nodeListId) })
+        NodeArrayListSingleton.getInstance().getNodeArrayList().insert(new Object[]{String.valueOf(nodeArrayListId), String.valueOf(parent.getNodeId()), String.valueOf(nodeListId) });
 
         ids.add(nodeId);
         ids.add(todoListId);
