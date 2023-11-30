@@ -30,7 +30,8 @@ public class TodoListService {
         this.todoListRepositoryClass = todoListRepositoryClass;
     }
 
-    public void deleteChildrenTodoListById(Long id) {
+    public void deleteChildrenTodoListById(Long id)
+    {
         Node target = nodeListIterator.findNodeInRoot(id);
         ArrayList<Node> children = nodeListIterator.getAllChildrenWithBFS(target);
         if(children == null){
@@ -41,21 +42,21 @@ public class TodoListService {
         ListIterator<Node> iterator = children.listIterator(children.size());
         while (iterator.hasPrevious()) {
             Node currentNode = iterator.previous();
-            //deleteSingleTodoListById(currentNode.getNodeId());
-            deleteTodoListById(currentNode.getNodeId());
+            Long parentId = currentNode.getNodeList().getParent().getNodeId();
+            deleteSingleTodoListById(currentNode.getNodeId(), parentId);
+            //deleteTodoListById(currentNode.getNodeId());
         }
         return;
     }
-
-    public void deleteSingleTodoListById(Long id){
+    public void deleteSingleTodoListById(Long id, Long parentId){
+        todoListRepositoryClass.removeTodolist(id, parentId);
         nodeListIterator.remove(id);
-        todoListRepository.deleteById(id);
         return;
     }
 
-    public void deleteTodoListById(Long id){
+    public void deleteTodoListById(Long id, Long parentId){
         deleteChildrenTodoListById(id);
-        deleteSingleTodoListById(id);
+        deleteSingleTodoListById(id, parentId);
         return;
     }
 

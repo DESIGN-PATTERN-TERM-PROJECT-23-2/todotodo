@@ -27,9 +27,12 @@
                     </span>
                     <ul>
                         <li th:each="element : ${category.todoListElementList}">
+                            <input type="checkbox" name="color" value="blue">
                             <span th:text="${element.content}"></span>
+                            <!--
                             <span th:text="${element.NodeId}"></span>
                             <span th:text="${element.TodoListId}"></span>
+                            -->
                             <form th:action="@{/todolist/create/{year}/{month}/{day}/{nodeId}(year=${tyear}, month=${tmonth}, day=${tday}, nodeId=${element.nodeId})}" method="post">
                                 <button type="submit">Addthat</button>
                             </form>
