@@ -27,7 +27,8 @@ public class TodoListRepositoryClass implements TodoListRepositoryInterface{
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public void removeTodolist(Node toDoList){
+    @Transactional
+    public void removeTodolist(Long nodeId, Long parentId){
 
         // 1. todolist 지우기
         // 2. nodeId로 node 지우기
@@ -35,20 +36,21 @@ public class TodoListRepositoryClass implements TodoListRepositoryInterface{
         // 4. nodeId가 같은 모든 row의 nodearraylist 지우기
 
         String sql1 = "DELETE FROM todo_lists WHERE node_id = ?";
-        jdbcTemplate.update(sql1, toDoList.getNodeId());
+        jdbcTemplate.update(sql1, nodeId);
 
-        String sql2 = "SELECT node_list_id FROM nodes WHERE parent_id = ?";
-        Long nodeListId = jdbcTemplate.queryForObject(sql2, Long.class, toDoList.getNodeId());
-        String sql3 = "DELETE FROM nodes WHERE node_id = ?";
-        jdbcTemplate.update(sql3, toDoList.getNodeId());
-
+        String sql2 = "SELECT node_list_id FROM nodes WHERE node_id = ?";
+        Long nodeListId = jdbcTemplate.queryForObject(sql2, Long.class, parentId);
         if (nodeListId != null) {
             String sql4 = "DELETE FROM node_lists WHERE node_list_id = ?";
             jdbcTemplate.update(sql4, nodeListId);
         }
 
         String sql5 = "DELETE FROM node_array_list WHERE node_id = ?";
-        jdbcTemplate.update(sql5, toDoList.getNodeId());
+        jdbcTemplate.update(sql5, nodeId);
+
+        String sql3 = "DELETE FROM nodes WHERE node_id = ?";
+        jdbcTemplate.update(sql3, nodeId);
+
     }
 
     @Transactional
