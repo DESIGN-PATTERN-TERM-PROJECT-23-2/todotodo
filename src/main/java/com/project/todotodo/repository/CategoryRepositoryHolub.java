@@ -1,22 +1,14 @@
 package com.project.todotodo.repository;
 
-import com.holub.database.CSVImporter;
-import com.holub.database.Database;
-import com.holub.database.Table;
-import com.holub.database.TableFactory;
+import com.holub.database.*;
 import com.holub.text.ParseFailure;
-import com.project.todotodo.Singleton.CategorySingleton;
-import com.project.todotodo.Singleton.IndexSingleton;
-import com.project.todotodo.Singleton.NodeListSingleton;
-import com.project.todotodo.Singleton.NodeSingleton;
+import com.project.todotodo.Singleton.*;
 import com.project.todotodo.model.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.Reader;
+import java.io.*;
+
 @Repository
 public class CategoryRepositoryHolub implements CategoryRepositoryInterface{
 
@@ -27,51 +19,58 @@ public class CategoryRepositoryHolub implements CategoryRepositoryInterface{
 
 
     public Long saveCategoryAndGetId(Category category) {
+        try {
 
-        Long nodeListId = IndexSingleton.getInstance().getNodeListIndexAndAddOne();
-        // String sql1 = "INSERT INTO node_lists (node_list_id, parent_id) VALUES ("+nodeListId+", NULL)";
-        // NodeListSingleton.getInstance().getDatabase().execute(sql1);
-        NodeListSingleton.getInstance().getNodeLists().insert(new Object[]{String.valueOf(nodeListId), "NULL"});
-        System.out.println(NodeListSingleton.getNodeLists());
+            Long nodeListId = IndexSingleton.getInstance().getNodeListIndexAndAddOne();
+            NodeListSingleton.getInstance().getNodeLists().insert(new Object[]{String.valueOf(nodeListId), "NULL"});
+            System.out.println(NodeListSingleton.getNodeLists());
+            Writer out = new FileWriter("node_lists.csv");
+            NodeListSingleton.getNodeLists().export(new CSVExporter(out));
+            out.close();
 
 
-        Long nodeId = IndexSingleton.getInstance().getNodeIndexAndAddOne();
-//            String sql2 = "INSERT INTO nodes (node_id, content, is_category, level, node_list_id) VALUES ("
-//                    +nodeId+", "+category.getContent()+", 1, 0,"+nodeListId+  ")";
-//            NodeSingleton.getInstance().getDatabase().execute(sql2);
-        NodeSingleton.getInstance().getNodes().insert(new Object[]{String.valueOf(nodeId), category.getContent(), "1", "0", String.valueOf(nodeListId)});
-        System.out.println(NodeSingleton.getNodes());
+            Long nodeId = IndexSingleton.getInstance().getNodeIndexAndAddOne();
+            NodeSingleton.getInstance().getNodes().insert(new Object[]{String.valueOf(nodeId), category.getContent(), "1", "0", String.valueOf(nodeListId)});
+            System.out.println(NodeSingleton.getNodes());
+            Writer out2 = new FileWriter("nodes.csv");
+            NodeSingleton.getNodes().export(new CSVExporter(out2));
+            out2.close();
 
-        Long categoryId = IndexSingleton.getInstance().getCategoryIndexAndAddOne();
-        IndexSingleton.getInstance().setCategoryIndex(categoryId+1);
-//            String sql3 = "INSERT INTO categories (category_id, content, node_id) VALUES ("
-//                    +categoryId+", "+category.getContent()+", "+nodeId+")";
-//            CategorySingleton.getInstance().getDatabase().execute(sql3);
-        CategorySingleton.getInstance().getCategories().insert(new Object[]{String.valueOf(categoryId), String.valueOf(nodeId), category.getContent()});
-        System.out.println(CategorySingleton.getCategories());
+            Long categoryId = IndexSingleton.getInstance().getCategoryIndexAndAddOne();
+            CategorySingleton.getInstance().getCategories().insert(new Object[]{String.valueOf(categoryId), String.valueOf(nodeId), category.getContent()});
+            System.out.println(CategorySingleton.getCategories());
+            Writer out3 = new FileWriter("categories.csv");
+            CategorySingleton.getCategories().export(new CSVExporter(out3));
+            out3.close();
 
-        // ********* table 에는 저장이 되는디 csv에선 저장이 안 됑
-        Table table = null;
-        try {table = NodeSingleton.getInstance().getDatabase().execute("select * from nodes");
-        } catch (IOException | ParseFailure e){
-            e.printStackTrace();
+            Table table = null;
+            table = DatagBaseSingleton.getInstance().getDatabase().execute("select * from nodes");
+            //Writer out123 = new FileWriter("")
+            System.out.println(table.toString());
+
+            table = DatagBaseSingleton.getInstance().getDatabase().execute("select * from categories");
+
+
+            System.out.println(table.toString());
+            return nodeId;
+        } catch (IOException | ParseFailure e) {
+        e.printStackTrace();
         }
-
-        System.out.println(table.toString());
-        return nodeId;
+        return -1L;
     }
 
     public void removeCateogory(Long id) {
-        // ******* delete 어케함?
-        try {
-            String sql = "DELETE FROM categories WHERE node_id = ?";
-            CategorySingleton.setCategories(CategorySingleton.getDatabase().execute(sql));
-            String sql2 = "DELETE FROM nodes WHERE node_id = ?";
-            NodeSingleton.setNodes(NodeSingleton.getDatabase().execute(sql2));
-
-        } catch (IOException | ParseFailure e){
-            e.printStackTrace();
-        }
-        return;
+//        // ******* delete 어케함?
+//        try {
+//            String sql = "DELETE FROM categories WHERE node_id = ?";
+//            CategorySingleton.setCategories(DatagBaseSingleton.getDatabase().execute(sql));
+//            String sql2 = "DELETE FROM nodes WHERE node_id = ?";
+//            NodeSingleton.setNodes(DatagBaseSingleton.getDatabase().execute(sql2));
+//
+//        } catch (IOException | ParseFailure e){
+//            e.printStackTrace();
+//        }
+//        return;
     }
+
 }

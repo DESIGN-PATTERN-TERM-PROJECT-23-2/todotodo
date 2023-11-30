@@ -22,9 +22,6 @@ public class CategorySingleton {
     @Getter
     @Setter
     private static Table categories;
-    @Getter
-    @Setter
-    static Database database;
     public static CategorySingleton getInstance() {
         if (instance == null) {
             synchronized(IndexSingleton.class){
@@ -47,9 +44,7 @@ public class CategorySingleton {
             CSVImporter csvImporter = new CSVImporter(in_category);
             categories = TableFactory.create(csvImporter);
 
-            database = new Database(new File("."));
-            Table table = database.execute("select * from categories");
-        } catch (IOException | ParseFailure e){
+        } catch (IOException e){
             e.printStackTrace();
         }
     }

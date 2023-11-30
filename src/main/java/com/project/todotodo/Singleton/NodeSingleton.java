@@ -22,9 +22,6 @@ public class NodeSingleton {
     @Getter
     @Setter
     private static Table nodes;
-    @Getter
-    @Setter
-    static Database database;
     public static NodeSingleton getInstance() {
         if (instance == null) {
             synchronized(IndexSingleton.class){
@@ -47,9 +44,7 @@ public class NodeSingleton {
             CSVImporter csvImporter = new CSVImporter(in_category);
             nodes = TableFactory.create(csvImporter);
 
-            database = new Database(new File("."));
-            Table table = database.execute("select * from nodes");
-        } catch (IOException | ParseFailure e){
+        } catch (IOException  e){
             e.printStackTrace();
         }
     }
