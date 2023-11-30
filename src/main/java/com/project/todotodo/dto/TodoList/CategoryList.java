@@ -12,6 +12,5 @@ public class CategoryList {
     private Long CategoryId;
     private String content;
     private List<TodoListElement> todoListElementList;
-    private int level;
 
 }
