@@ -18,7 +18,9 @@ public class TodoListRepositoryHolub implements  TodoListRepositoryInterface{
     @Autowired
     public TodoListRepositoryHolub() {}
 
-    public void removeTodolist(Node toDoList){
+
+    @Override
+    public void removeTodolist(Long id, Long parentId) {
         // 추후 구현
     }
 

@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 @Repository
 public interface TodoListRepositoryInterface {
-    public void removeTodolist(Node toDoList);
+    public void removeTodolist(Long id, Long parentId);
     public ArrayList<Long> create(Node parent, ToDoList toDoList) throws IOException;
 
 }
