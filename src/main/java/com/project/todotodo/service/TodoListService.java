@@ -1,17 +1,13 @@
 package com.project.todotodo.service;
 
-import com.project.todotodo.dto.Goal.CategoryListElement;
-import com.project.todotodo.dto.TodoList.TodoListElement;
 import com.project.todotodo.model.*;
 import com.project.todotodo.repository.TodoListRepository;
-import com.project.todotodo.repository.TodoListRepositoryClass;
 import com.project.todotodo.repository.TodoListRepositoryInterface;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.ListIterator;
 
 @Service
@@ -22,13 +18,16 @@ public class TodoListService {
 
     private final TodoListRepositoryInterface todoListRepositoryClass;
 
+    private final TodoListRepositoryInterface todoListRepositoryHolub;
 
 
-    public TodoListService(TodoListRepository todoListRepository, NodeListService nodeListService, TodoListRepositoryInterface todoListRepositoryClass) {
+
+    public TodoListService(TodoListRepository todoListRepository, NodeListService nodeListService, TodoListRepositoryInterface todoListRepositoryClass, TodoListRepositoryInterface todoListRepositoryHolub) {
         this.todoListRepository = todoListRepository;
         this.nodeListService = nodeListService;
         this.nodeListIterator = nodeListService.getIterator();
         this.todoListRepositoryClass = todoListRepositoryClass;
+        this.todoListRepositoryHolub = todoListRepositoryHolub;
     }
 
     public void deleteChildrenTodoListById(Long id) {
@@ -60,7 +59,7 @@ public class TodoListService {
         return;
     }
 
-    public Long createTodoList(Long parent_id, String content, LocalDateTime time){
+    public Long createTodoList(Long parent_id, String content, LocalDateTime time) throws IOException {
         ToDoList todo = new ToDoList();
         Node parent = nodeListIterator.findNodeInRoot(parent_id);
         if(parent == null){

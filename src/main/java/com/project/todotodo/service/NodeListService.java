@@ -1,14 +1,15 @@
 package com.project.todotodo.service;
 
+import com.holub.text.ParseFailure;
 import com.project.todotodo.dto.TodoList.CategoryList;
 import com.project.todotodo.dto.TodoList.TodoListElement;
 import com.project.todotodo.model.*;
 import com.project.todotodo.repository.NodeListRepository;
-import com.project.todotodo.repository.NodeListRepositoryClass;
 import com.project.todotodo.repository.NodeListRepositoryInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,15 +21,18 @@ public class NodeListService {
     private NodeListIterator nodeListIterator;
 
     private final NodeListRepositoryInterface nodeListRepositoryClass;
+
+    private final NodeListRepositoryInterface nodeListRepositoryHolub;
     @Autowired
-    public NodeListService(NodeListRepository nodeListRepository, NodeListRepositoryInterface nodeListRepositoryClass) {
+    public NodeListService(NodeListRepository nodeListRepository, NodeListRepositoryInterface nodeListRepositoryClass, NodeListRepositoryInterface nodeListRepositoryHolub) throws IOException, ParseFailure {
         this.nodeListRepository = nodeListRepository;
         this.nodeListRepositoryClass = nodeListRepositoryClass;
+        this.nodeListRepositoryHolub = nodeListRepositoryHolub;
         this.nodeList = initNodeList();
         System.out.println("created NodeListService-------");
     }
 
-    private NodeList initNodeList(){
+    private NodeList initNodeList() throws IOException, ParseFailure {
         Node root = new Root();
         // NodeList nodeList = new NodeList(root, null);
         this.nodeList = new NodeList(root, null);
