@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class NodeListRepositoryClass {
+public class NodeListRepositoryClass implements NodeListRepositoryInterface{
 
     private final JdbcTemplate jdbcTemplate;
 

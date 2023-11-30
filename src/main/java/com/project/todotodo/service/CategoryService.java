@@ -4,15 +4,15 @@ import com.project.todotodo.dto.Goal.CategoryListElement;
 
 import com.project.todotodo.model.Category;
 import com.project.todotodo.model.Node;
-import com.project.todotodo.model.NodeList;
 import com.project.todotodo.model.NodeListIterator;
 import com.project.todotodo.repository.CategoryRepository;
 import com.project.todotodo.repository.CategoryRepositoryClass;
+import com.project.todotodo.repository.CategoryRepositoryHolub;
+import com.project.todotodo.repository.CategoryRepositoryInterface;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ListIterator;
 
 @Service
 public class CategoryService {
@@ -23,13 +23,16 @@ public class CategoryService {
     private final TodoListService todoListService;
     private NodeListIterator nodeListIterator;
 
-    private final CategoryRepositoryClass categoryRepositoryClass;
+    private final CategoryRepositoryInterface categoryRepositoryHolub;
 
-    public CategoryService(CategoryRepository categoryRepository, NodeListService nodeListService, TodoListService todoListService, CategoryRepositoryClass categoryRepositoryClass) {
+    private final CategoryRepositoryInterface categoryRepositoryClass;
+
+    public CategoryService(CategoryRepository categoryRepository, NodeListService nodeListService, TodoListService todoListService, CategoryRepositoryInterface categoryRepositoryHolub, CategoryRepositoryInterface categoryRepositoryClass) {
         this.categoryRepository = categoryRepository;
         this.nodeListService = nodeListService;
         this.nodeListIterator = nodeListService.getIterator();
         this.todoListService = todoListService;
+        this.categoryRepositoryHolub = categoryRepositoryHolub;
         this.categoryRepositoryClass = categoryRepositoryClass;
     }
 
@@ -47,11 +50,21 @@ public class CategoryService {
 
     public Long createCategory(String name) {
         // Parent id의 nodelist에
+//        Category category = new Category();
+//        category.setContent(name);
+//        category.setLevel(0);
+//        category.setNodeList(nodeListIterator.getRoot());
+//        Long categoryId = categoryRepositoryClass.saveCategoryAndGetId(category);
+//        category.setNodeId(categoryId);
+//        category.setCategoryId(categoryId);
+//        nodeListIterator.addToGivenParent(0L, category);
+//        return categoryId;
+
         Category category = new Category();
         category.setContent(name);
         category.setLevel(0);
         category.setNodeList(nodeListIterator.getRoot());
-        Long categoryId = categoryRepositoryClass.saveCategoryAndGetId(category);
+        Long categoryId = categoryRepositoryHolub.saveCategoryAndGetId(category);
         category.setNodeId(categoryId);
         category.setCategoryId(categoryId);
         nodeListIterator.addToGivenParent(0L, category);
@@ -61,7 +74,7 @@ public class CategoryService {
     public void deleteCategoryById(Long id) {
         todoListService.deleteChildrenTodoListById(id);
         nodeListIterator.remove(id);
-        categoryRepositoryClass.removeCateogory(id);
+        categoryRepositoryHolub.removeCateogory(id);
         return;
     }
 }
