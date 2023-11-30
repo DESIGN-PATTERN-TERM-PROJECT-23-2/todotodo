@@ -29,12 +29,12 @@ class CategoryRepositoryClassTest {
         Category category = new Category();
         category.setContent("TestCategory");
 
-
         // When
         Long categoryId = categoryRepositoryClass.saveCategoryAndGetId(category);
 
         // Then
         assertEquals("TestCategory",category.getContent());
+        // categoryId 확인은 필요없으니 삭제
     }
 
 //    @AfterEach
