@@ -26,7 +26,7 @@
                     </form>
                     </span>
                     <ul>
-                        <li th:each="element : ${category.todoListElementList}">
+                        <span th:each="element : ${category.todoListElementList}">
                             <input type="checkbox" name="color" value="blue">
                             <span th:text="${element.content}"></span>
                             <!--
@@ -41,7 +41,7 @@
                                 <button class="addButton" th:data-nodeId="${element.NodeId}" th:data-categoryId="${category.CategoryId}">Add</button>
                             </form>
                             -->
-                        </li>
+                        </span>
                     </ul>
                 </li>
             </ul>
