@@ -4,7 +4,9 @@ import com.holub.text.ParseFailure;
 import com.project.todotodo.dto.TodoList.CategoryList;
 import com.project.todotodo.dto.TodoList.TodoListElement;
 import com.project.todotodo.model.*;
+import com.project.todotodo.repository.NodeArrayListRepositoryHolub;
 import com.project.todotodo.repository.NodeListRepository;
+import com.project.todotodo.repository.NodeListRepositoryHolub;
 import com.project.todotodo.repository.NodeListRepositoryInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,9 +24,10 @@ public class NodeListService {
 
     private final NodeListRepositoryInterface nodeListRepositoryClass;
 
-    private final NodeListRepositoryInterface nodeListRepositoryHolub;
-    @Autowired
-    public NodeListService(NodeListRepository nodeListRepository, NodeListRepositoryInterface nodeListRepositoryClass, NodeListRepositoryInterface nodeListRepositoryHolub) throws IOException, ParseFailure {
+    private final NodeListRepositoryHolub nodeListRepositoryHolub;
+
+    public NodeListService(NodeListRepository nodeListRepository, NodeListRepositoryInterface nodeListRepositoryClass, NodeListRepositoryHolub nodeListRepositoryHolub) throws IOException, ParseFailure {
+
         this.nodeListRepository = nodeListRepository;
         this.nodeListRepositoryClass = nodeListRepositoryClass;
         this.nodeListRepositoryHolub = nodeListRepositoryHolub;
@@ -37,7 +40,7 @@ public class NodeListService {
         // NodeList nodeList = new NodeList(root, null);
         this.nodeList = new NodeList(root, null);
         this.nodeListIterator = this.nodeList.createIterator();
-        for (Node element : nodeListRepositoryClass.findCategories(root)) {
+        for (Node element : nodeListRepositoryHolub.findCategories(root)) {
             nodeListIterator.add(element);
             System.out.println("added category -----");
         }
@@ -47,7 +50,7 @@ public class NodeListService {
             Node parent = nodeListIterator.next();
             Node savedCurr = nodeListIterator.getCurr();
             nodeListIterator.setCurr(parent);
-            ArrayList<Node> children = nodeListRepositoryClass.findByParentId(parent.getNodeId(), parent);
+            ArrayList<Node> children = nodeListRepositoryHolub.findByParentId(parent.getNodeId(), parent);
             if(children != null) {
                 for (Node element : children) {
                     nodeListIterator.add(element);

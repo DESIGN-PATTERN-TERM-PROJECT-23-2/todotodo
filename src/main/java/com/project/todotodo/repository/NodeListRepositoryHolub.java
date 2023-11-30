@@ -26,7 +26,7 @@ public class NodeListRepositoryHolub implements NodeListRepositoryInterface {
 
     public ArrayList<Node> findCategories(Node root) throws IOException, ParseFailure {
         List<Category> categoryList = new ArrayList<>();
-        Table table = DatagBaseSingleton.getInstance().getDatabase().execute("SELECT * FROM nodes, categories WHERE nodes.node_id = categories.node_id AND nodes.level = 0;");
+        Table table = DatagBaseSingleton.getInstance().getDatabase().execute("SELECT * FROM nodes, categories WHERE nodes.node_id = categories.node_id AND nodes.level = 0");
         Cursor cursor = table.rows();
         for (int i = 0; cursor.advance(); i++) {
             Category category = new Category();

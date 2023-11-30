@@ -1,6 +1,2 @@
 ﻿nodes
-node_id,	content,	is_category,	level,	node_list_id
-1,	qq,	1,	0,	1
-1,	q,	1,	0,	1
-1,	pol,	1,	0,	1
-1,	ee,	1,	0,	1
+node_id,content,is_category,level,node_list_id

@@ -2,6 +2,7 @@ package com.project.todotodo.service;
 
 import com.project.todotodo.model.*;
 import com.project.todotodo.repository.TodoListRepository;
+import com.project.todotodo.repository.TodoListRepositoryHolub;
 import com.project.todotodo.repository.TodoListRepositoryInterface;
 import org.springframework.stereotype.Service;
 
@@ -18,11 +19,11 @@ public class TodoListService {
 
     private final TodoListRepositoryInterface todoListRepositoryClass;
 
-    private final TodoListRepositoryInterface todoListRepositoryHolub;
+    private final TodoListRepositoryHolub todoListRepositoryHolub;
 
 
 
-    public TodoListService(TodoListRepository todoListRepository, NodeListService nodeListService, TodoListRepositoryInterface todoListRepositoryClass, TodoListRepositoryInterface todoListRepositoryHolub) {
+    public TodoListService(TodoListRepository todoListRepository, NodeListService nodeListService, TodoListRepositoryInterface todoListRepositoryClass, TodoListRepositoryHolub todoListRepositoryHolub) {
         this.todoListRepository = todoListRepository;
         this.nodeListService = nodeListService;
         this.nodeListIterator = nodeListService.getIterator();
@@ -79,7 +80,7 @@ public class TodoListService {
         */
 
         // node_id, todo_list_id
-        ArrayList<Long> ids = todoListRepositoryClass.create(parent, todo);
+        ArrayList<Long> ids = todoListRepositoryHolub.create(parent, todo);
         if(ids == null || ids.size() != 2){
             System.out.println("failed to save in todoList DB");
             return 0L;

@@ -74,7 +74,7 @@ public class CategoryService {
     public void deleteCategoryById(Long id) {
         todoListService.deleteChildrenTodoListById(id);
         nodeListIterator.remove(id);
-        categoryRepositoryClass.removeCateogory(id);
+        categoryRepositoryHolub.removeCateogory(id);
         return;
     }
 }
