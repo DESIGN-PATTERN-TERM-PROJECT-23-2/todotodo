@@ -25,9 +25,8 @@
                             <button type="submit">Add</button>
                         </form>
                     </span>
-                    <ul th:each="element : ${category.todoListElementList}">
-                        <!-- 두 번째 레벨 들여쓰기 -->
-                        <li>
+                    <ul th:each="element, elementIndex : ${category.todoListElementList}">
+                        <li th:class="${elementIndex == 0} ? '' : 'in'">
                             <span th:text="${element.content}"></span>
                             <span th:text="${element.NodeId}"></span>
                             <span th:text="${element.TodoListId}"></span>
