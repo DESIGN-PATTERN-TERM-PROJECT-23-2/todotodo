@@ -5,37 +5,37 @@ import com.holub.database.Database;
 import com.holub.database.Table;
 import com.holub.database.TableFactory;
 import com.holub.text.ParseFailure;
+import com.project.todotodo.model.Node;
+import com.project.todotodo.model.ToDoList;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.util.ArrayList;
+import java.util.List;
 
+@Repository
 public class NodeListRepositoryHolub {
-    Table nodeList;
-    Database database;
+    @Autowired
+    public NodeListRepositoryHolub() {}
 
-    public NodeListRepositoryHolub() {
-        try {
-            insertData();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public ArrayList<Node> findCategories(Node root) {
+        return null;
     }
 
-
-    private void insertData() throws IOException {
-        try {
-
-            Reader in_name = new FileReader("node_lists.csv");
-            CSVImporter csvImporter = new CSVImporter(in_name);
-            nodeList = TableFactory.create(csvImporter);
-
-            database = new Database(new File("."));
-            Table table = database.execute("select * from node_lists");
-
-        } catch (IOException | ParseFailure e) {
-            e.printStackTrace();
-        }
+    public ArrayList<Node> findByParentId(Long id, Node parent) {
+        return null;
     }
+
+    public List<Long> getNodeIdsByParentId(Long parentId) {
+        return null;
+    }
+
+    public ToDoList getTodoListById(Long nodeId, Node parent) {
+        return null;
+    }
+
 }

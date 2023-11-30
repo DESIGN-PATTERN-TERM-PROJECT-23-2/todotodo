@@ -51,7 +51,13 @@ public class CategoryRepositoryHolub {
         System.out.println(CategorySingleton.getCategories());
 
         // ********* table 에는 저장이 되는디 csv에선 저장이 안 됑
+        Table table = null;
+        try {table = NodeSingleton.getInstance().getDatabase().execute("select * from nodes");
+        } catch (IOException | ParseFailure e){
+            e.printStackTrace();
+        }
 
+        System.out.println(table.toString());
         return nodeId;
     }
 

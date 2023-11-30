@@ -21,7 +21,7 @@ public class TodoListSingleton {
 
     @Getter
     @Setter
-    private static Table nodeLists;
+    private static Table todoLists;
     @Getter
     @Setter
     static Database database;
@@ -45,7 +45,7 @@ public class TodoListSingleton {
 
             Reader in_category = new FileReader("todo_lists.csv");
             CSVImporter csvImporter = new CSVImporter(in_category);
-            nodeLists = TableFactory.create(csvImporter);
+            todoLists = TableFactory.create(csvImporter);
 
             database = new Database(new File("."));
             Table table = database.execute("select * from todo_lists");
