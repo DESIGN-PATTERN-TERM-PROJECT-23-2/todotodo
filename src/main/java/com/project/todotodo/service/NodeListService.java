@@ -73,7 +73,8 @@ public class NodeListService {
             categoryList.setContent(category.getContent());
             List<TodoListElement> todoListElementList = getAllTodoListsOfCategoryByDate(nodeId, date);
             categoryList.setTodoListElementList(todoListElementList);
-
+            categoryList.setLevel(category.getLevel());
+            
             categoryLists.add(categoryList);
         }
         // to be updated
