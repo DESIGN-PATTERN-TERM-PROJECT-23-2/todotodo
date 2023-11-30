@@ -1,16 +1,14 @@
 package com.project.todotodo.service;
 
-import com.project.todotodo.dto.Goal.CategoryListElement;
-import com.project.todotodo.dto.TodoList.TodoListElement;
 import com.project.todotodo.model.*;
 import com.project.todotodo.repository.TodoListRepository;
-import com.project.todotodo.repository.TodoListRepositoryClass;
+import com.project.todotodo.repository.TodoListRepositoryHolub;
+import com.project.todotodo.repository.TodoListRepositoryInterface;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.ListIterator;
 
 @Service
@@ -19,15 +17,18 @@ public class TodoListService {
     private final NodeListService nodeListService;
     private NodeListIterator nodeListIterator;
 
-    private final TodoListRepositoryClass todoListRepositoryClass;
+    private final TodoListRepositoryInterface todoListRepositoryClass;
+
+    private final TodoListRepositoryHolub todoListRepositoryHolub;
 
 
 
-    public TodoListService(TodoListRepository todoListRepository, NodeListService nodeListService, TodoListRepositoryClass todoListRepositoryClass) {
+    public TodoListService(TodoListRepository todoListRepository, NodeListService nodeListService, TodoListRepositoryInterface todoListRepositoryClass, TodoListRepositoryHolub todoListRepositoryHolub) {
         this.todoListRepository = todoListRepository;
         this.nodeListService = nodeListService;
         this.nodeListIterator = nodeListService.getIterator();
         this.todoListRepositoryClass = todoListRepositoryClass;
+        this.todoListRepositoryHolub = todoListRepositoryHolub;
     }
 
     public void deleteChildrenTodoListById(Long id)
@@ -60,7 +61,7 @@ public class TodoListService {
         return;
     }
 
-    public Long createTodoList(Long parent_id, String content, LocalDateTime time){
+    public Long createTodoList(Long parent_id, String content, LocalDateTime time) throws IOException {
         ToDoList todo = new ToDoList();
         Node parent = nodeListIterator.findNodeInRoot(parent_id);
         if(parent == null){
@@ -80,7 +81,7 @@ public class TodoListService {
         */
 
         // node_id, todo_list_id
-        ArrayList<Long> ids = todoListRepositoryClass.create(parent, todo);
+        ArrayList<Long> ids = todoListRepositoryHolub.create(parent, todo);
         if(ids == null || ids.size() != 2){
             System.out.println("failed to save in todoList DB");
             return 0L;

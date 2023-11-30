@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -64,7 +65,7 @@ public class TodoListController {
     }
 
     @PostMapping("/create")
-    public String create(TodoForm todoForm){
+    public String create(TodoForm todoForm) throws IOException {
         // 월 값 확인 및 조정
         //int month = Math.max(1, Math.min(12, todoForm.getMonth()));
         // 일 값 확인 및 조정
