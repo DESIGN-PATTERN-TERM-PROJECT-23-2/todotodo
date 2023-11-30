@@ -18,7 +18,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;  // 추가된 부분
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
 public class NodeListRepositoryClassTest {
@@ -36,7 +36,6 @@ public class NodeListRepositoryClassTest {
 
     @Test
     public void testFindCategories() {
-        // Mock data
         Node root = new Node() {
             // Implement necessary methods for Node
         };
@@ -52,13 +51,10 @@ public class NodeListRepositoryClassTest {
         categoryList.add(category);
 
         when(jdbcTemplate.query(eq("SELECT * FROM nodes INNER JOIN categories ON nodes.node_id = categories.node_id WHERE level = 0"),
-                any(Object[].class), any(RowMapper.class))).thenReturn(categoryList);
+                any(RowMapper.class))).thenReturn(categoryList);
 
-
-        // Call the method
         ArrayList<Node> result = nodeListRepositoryClass.findCategories(root);
 
-        // Assertions
         assertEquals(1, result.size());
         assertEquals("TestCategory", result.get(0).getContent());
         assertEquals(3L, ((Category) result.get(0)).getCategoryId());
@@ -66,7 +62,6 @@ public class NodeListRepositoryClassTest {
 
     @Test
     public void testGetTodoListById() {
-        // Mock data
         Node parent = new Node() {
             // Implement necessary methods for Node
         };
@@ -82,18 +77,16 @@ public class NodeListRepositoryClassTest {
         expectedToDoList.setComplete(true);
         expectedToDoList.setDate(LocalDateTime.now());
 
-        // Mock jdbcTemplate.queryForObject
-        when(jdbcTemplate.queryForObject(eq("SELECT n.*, tl.* FROM nodes n JOIN todo_lists tl ON n.node_id = tl.node_id WHERE n.node_id = ?"),
-                any(), any(), eq(2L))).thenReturn(expectedToDoList);
+        when(jdbcTemplate.queryForObject(
+                eq("SELECT n.*, tl.* FROM nodes n JOIN todo_lists tl ON n.node_id = tl.node_id WHERE n.node_id = ?"),
+                any(RowMapper.class),
+                eq(2L))
+        ).thenReturn(expectedToDoList);
 
-        // Call the method
         ToDoList result = nodeListRepositoryClass.getTodoListById(2L, parent);
 
-        // Assertions
         assertEquals("TestToDo", result.getContent());
         assertEquals(3L, result.getTodoListId());
         assertEquals(true, result.isComplete());
     }
-
-    // Add more tests for other methods as needed
 }
