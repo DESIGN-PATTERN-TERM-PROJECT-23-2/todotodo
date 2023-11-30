@@ -11,7 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.Statement;
 
 @Repository
-public class CategoryRepositoryClass {
+public class CategoryRepositoryClass implements CategoryRepositoryInterface {
 
     private final JdbcTemplate jdbcTemplate;
 

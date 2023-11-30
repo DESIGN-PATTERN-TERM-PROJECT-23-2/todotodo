@@ -11,7 +11,7 @@ import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-public class SelectTest {
+public class TodoConnectTest {
 
 
     Table name;
@@ -20,11 +20,11 @@ public class SelectTest {
 
     private void insertData() throws IOException {
 
-        Reader in_name = new FileReader("name.csv");
+        Reader in_name = new FileReader("todo_lists.csv");
         CSVImporter csvImporter = new CSVImporter(in_name);
         name = TableFactory.create(csvImporter);
 
-        Reader in_address = new FileReader("address.csv");
+        Reader in_address = new FileReader("nodes.csv");
         CSVImporter csvImporter_address = new CSVImporter(in_address);
         address = TableFactory.create(csvImporter_address);
 
@@ -35,7 +35,7 @@ public class SelectTest {
     @Test
     public void join_test() throws IOException, ParseFailure {
         insertData();
-        Table join_table = database.execute("select * from address, name where address.addrId = name.addrId");
+        Table join_table = database.execute("SELECT * FROM nodes, todo_lists WHERE nodes.node_id = todo_lists.node_id AND nodes.node_id = 2");
         Table expectedTable = TableFactory.create("<anonymous>", new String[]{"addrId", "street", "city", "state", "zip", "first", "last", "addrId"});
         expectedTable.insert(new Object[]{"0", "12 MyStreet", "Berkeley", "CA", "99998", "Allen", "Holub", 0});
         expectedTable.insert(new Object[]{"1", "34 Quarry Ln.", "Bedrock", "AZ", "00000", "Fred", "Flintstone", 1});
@@ -44,8 +44,6 @@ public class SelectTest {
         String string_expected = expectedTable.toString();
 
         String string_join_table = join_table.toString();
-        System.out.println("-------------");
-        System.out.println(expectedTable.toString());
 
         Assertions.assertEquals(string_expected, string_join_table);
     }
