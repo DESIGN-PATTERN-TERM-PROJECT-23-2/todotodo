@@ -1,2 +1,4 @@
 ﻿categories
-category_id,node_id,content
+category_id,	node_id,	content
+1,	1,	goal1
+2,	2,	goal2
